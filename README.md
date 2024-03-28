@@ -10,6 +10,7 @@ Quiz Spel
  - - tests/ (directory for test files)
  - - venv/ (directory for virtual environment)
 
+# för att se frågor kan ska du ge /quiz i webläsren
 
  FutQuiz/QUIZ-PYTHON-GAME
 │
