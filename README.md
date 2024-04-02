@@ -27,9 +27,3 @@ Quiz Spel
 └── venv/
 
 Github - https://github.com/Peppino9/quiz-python-game
-
-test
-
-
-
-csdcsdc
