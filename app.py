@@ -3,10 +3,25 @@ from flask import Flask, render_template
 from quiz_logic import generate_random_questions  # Importing function from quiz_logic module
 from data.questions import question_bank
 
-
 import psycopg2
 from psycopg2 import OperationalError
 import datetime
+
+#Connection to database
+def connect_to_database():
+    try:
+        conn = psycopg2.connect(
+            database="futquiz",
+            host="pgserver.mau.se",
+            user="aj2020",
+            password="zfdix2uu",
+            port="5432" 
+        )
+        return conn
+    except OperationalError as e:
+        print(f"Error connecting to the database: {e}")
+        return None
+
 
 # Create Flask app / # Create an instance of the Flask class
 app = Flask(__name__)
