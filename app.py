@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2 import OperationalError
 import datetime
 
-#Connection to database
+#Connection to PgAdmin database
 def connect_to_database():
     try:
         conn = psycopg2.connect(

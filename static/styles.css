@@ -1,7 +1,7 @@
-/* styles.css */
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family:luckiest guy, Helvetica, sans-serif;
+    background-color: #c30000;
     margin: 0;
     padding: 0;
 }
@@ -16,7 +16,10 @@ body {
 }
 
 h1 {
+    font-family: luckiest guy;
     color: #333;
 }
+
+
 
 /* Add more styles as needed */
