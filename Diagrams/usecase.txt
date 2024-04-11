@@ -1,0 +1,35 @@
+PlantUML code (diagram code for use case diagram): 
+
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor User as "Användare"
+actor Admin as "Administratör"
+
+rectangle "FutQuiz System" {
+    usecase (Logga in) as UC1
+    usecase (Spela spel) as UC2
+    usecase (Visa poäng) as UC3
+    usecase (Lämna spel) as UC4
+    usecase (Föreslå frågor) as UC5
+    usecase (Skapa konto) as UC6
+    usecase (Välja svårighetsgrad) as UC7
+    usecase (Hantera frågor) as UC8
+    usecase (Hantera användare) as UC9
+}
+
+User --> UC1 : Användning
+User --> UC2 : Användning
+User --> UC3 : Användning
+User --> UC4 : Användning
+User --> UC5 : Användning
+User --> UC6 : Användning
+User --> UC7 : Användning
+UC2 --> UC7 : Användning
+
+Admin --> UC5 : Användning
+Admin --> UC8 : Användning
+Admin --> UC9 : Användning
+
+@enduml
