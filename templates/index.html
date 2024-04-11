@@ -1,18 +1,27 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css">
+    <title>Welcome to FutQuiz</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
-    <title>FutQuiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Welcome to FutQuiz!</h1>
-    <p>Start playing the quiz now!</p>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to FutQuiz</h1>
+            <p>Test your knowledge of Football with our quiz game!</p>
+        </div>
+        <div class="login-section">
+            <a href="/login" class="btn">Login</a>
+            <a href="/signup" class="btn">Signup</a>
+        </div>
+    </div>
 </body>
 </html>

@@ -32,6 +32,16 @@ def index():
     """Render the index page. (Render initial page with a form to start a new game.)"""
     return render_template('index.html')
 
+@app.route('/login')
+def login():
+    # Render login page template
+    pass
+
+@app.route('/signup')
+def signup():
+    # Render signup page template
+    pass
+
 # Define route for the quiz page
 @app.route('/quiz')
 def quiz():
