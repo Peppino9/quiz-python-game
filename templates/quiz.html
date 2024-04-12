@@ -11,6 +11,8 @@
 </head>
 
 <body>
+<div>
+    <h2>Welcome: <b>{{ user_name }}</b></h2>
     <h1>Quiz</h1>
     <form action="#" method="post">
         {% for question in questions %}
@@ -25,5 +27,6 @@
         {% endfor %}
         <button type="submit">Submit</button>
     </form>
+</div>
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>My project</title>
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+		<link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+
+<div>
+	<h1>Log in</h1>
+	<form action="/user_view" method="post">
+
+	    <div class="container">
+	      <label for="uname"><b>Username (email)</b></label>
+	      <input type="text" placeholder="Enter Username" name="uname" required>
+	
+	      <label for="psw"><b>Password</b></label>
+	      <input type="password" placeholder="Enter Password" name="psw" required>
+	
+	      <button type="submit">Login</button>
+	    </div>
+	</form>
+	<form action="/" method="get">
+        <button type="submit" class="cancelbtn">Cancel</button>
+	</form>
+</div>
+
+</body>
+</html>
