@@ -1,0 +1,122 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  html,body{
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* tHE ELEMENT OF THE WHOLE PAGE*/
+  /* element has a linear gradient and background image applied, and styles for the background position, size, height, and text color. */
+  #container{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("assets/img5.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    color: rgb(32, 31, 31);
+  } 
+  
+  /* LOGO SECTION*/
+  /* The element has a background-color and padding set, and the anchor element within it has styles for the text decoration, font-family, color, font-size, font-weight, text-fill-color, text-stroke, and border-bottom. */
+  #logo{
+    background-color: rgba(61, 30, 30, 0.3);
+    padding:20px 0 20px 20px;
+  }
+  
+  #logo a{
+    text-decoration: none;
+    font-family:none;
+    color: rgb(191 146 91);
+    font-size: 33px;
+    font-weight:500;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px rgb(191 146 91);
+  
+    border-bottom: 1px solid rgb(191 146 91); 
+  }
+  
+  /* INPUT SECTION */
+  /*  element has a background-color, width, height, margin, font-size, color, and border-radius set */
+  #box {
+    background-color: rgba(212, 209, 209, 0.867);
+    width: 750px;
+    height:500px;
+    margin: 16px auto;
+    font-size: 16px;
+    color: rgb(24, 24, 24);
+    border-radius: 70px;
+  }
+  
+  /* The  element has a width and margin set. that sets the box in the middle of the page */
+  #box-triangle {
+    width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  #box-header {
+    padding: 20px;
+    font-size: 1.6em;
+    font-weight:700;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(22, 20, 20);
+  }
+  
+  #box-par{
+    padding: 0 80px 60px 100px;
+    line-height: 30px;
+    opacity: 0.9;
+    
+  }
+  
+  #box input[type="input"] {
+    background-color: transparent;
+    width: 90%;
+    margin-left: 5%;
+    padding: 30px;
+    
+    border-style:dotted;
+    outline: 0.1;
+  
+    text-align: center;
+    color: aliceblue;
+  }
+  
+  #box input[type="submit"] {
+    background: rgb(30, 30, 32);
+    width:40%;
+    margin-left:30%;
+    margin-top: 6%;
+    padding:20px;
+    
+    border-color: transparent;
+    border-radius: 40px;
+    color: #fff;
+  }
+  
+  #box input[type="submit"]:hover {
+    background: rgb(0, 0, 0);
+  }
+  
+  /* FOOTER SECTION */
+  footer {
+    position: absolute;
+    background:rgb(20 27 37);
+    text-align:left;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height:50px;
+    padding:15px;
+  }
+  
+  footer span{
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px white;
+  }
