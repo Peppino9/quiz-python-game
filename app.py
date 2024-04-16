@@ -11,7 +11,7 @@ import datetime
 
 dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "zfdix2uu")
 
-#Connection to PgAdmin database
+'''#Connection to PgAdmin database
 def connect_to_database():
     try:
         conn = psycopg2.connect(
@@ -24,7 +24,7 @@ def connect_to_database():
         return conn
     except OperationalError as e:
         print(f"Error connecting to the database: {e}")
-        return None
+        return None'''
 
 def isBlank(checked_str):
     if not checked_str or checked_str.strip() == "" or checked_str.strip() == "None":
