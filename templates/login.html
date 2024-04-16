@@ -18,6 +18,8 @@
 </head>
 <body>
 
+<input type="hidden" id="alertMsg" name="alertMsg" value="{{ alert_msg }}">
+
 <div id="container">
     <div id="logo">
         <a href="index.html"> &copy; FutQuiz</a>
@@ -43,6 +45,17 @@
         <span> &copy; FutQuiz</span>
     </footer>
 </div>
+
+<script type="text/javascript">
+	document.onreadystatechange = function() {
+		if(document.readyState=='loaded' || document.readyState=='complete') {
+			var msg = document.getElementById("alertMsg").value;
+			if (msg) {
+				alert(msg);
+			}
+		}
+	}
+</script>
 
 </body>
 </html>

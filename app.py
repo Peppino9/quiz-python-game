@@ -32,6 +32,12 @@ def isBlank(checked_str):
     return False
 
 
+def is_valid_password(password):
+    has_upper = any(char.isupper() for char in password)
+    has_digit = any(char.isdigit() for char in password)
+    return has_upper and has_digit
+
+
 # Create Flask app / # Create an instance of the Flask class
 app = Flask(__name__)
 
@@ -42,12 +48,33 @@ def index():
     return render_template('index.html')
 
 @app.route('/login')
-def login():
-    return render_template('login.html')
+@app.route('/login/msg/<alert>')
+def login(alert=""):
+    alert_message = alert
+    if not isBlank(alert):
+        if alert == "wrongUserPass":
+            alert_message = "Wrong user name or password!"
+        elif alert == "passwordMissMatch":
+            alert_message = "Wrong password or password missmatch!"
+        elif alert == "loginError":
+            alert_message = "Login error!"
+
+    return render_template('login.html', alert_msg=alert_message)
+
 
 @app.route('/signup')
-def signup():
-    return render_template('signup.html')
+@app.route('/signup/msg/<alert>')
+def signup(alert=""):
+    alert_message = alert
+    if not isBlank(alert):
+        if alert == "passwordMissMatch":
+            alert_message = "Wrong password or password missmatch!"
+        elif alert == "wrongPassword":
+            alert_message = "Password must contain atleast\none digit and one capital letter."
+        elif alert == "cantCreateUser":
+            alert_message = "Can't create user!\nUser may already exists."
+
+    return render_template('signup.html', alert_msg=alert_message)
 
 
 @app.route('/user_view', methods=['POST'])
@@ -67,14 +94,14 @@ def user_view():
         try:
             results = dbConnector.executeSQL("SELECT password_hash FROM users WHERE email='%s'" % uname)
             if not results:
-                return redirect("/")
+                return redirect("/login/msg/wrongUserPass")
             for row in results:
                 c_pass = row[0]
                 if c_pass != passwd:
-                    return redirect("/")
+                    return redirect("/login/msg/wrongUserPass")
         except Exception as e:
             print("ERROR: %s" % str(e))
-            return redirect("/")
+            return redirect("/login/msg/loginError")
     else:
         uname = userId
 
@@ -84,15 +111,17 @@ def user_view():
 @app.route('/new_user_view', methods=['POST'])
 def new_user_view():
     email = request.form.get("email")
-    passwd = request.form.get("psw")
-    re_passwd = request.form.get("psw-repeat")
+    passwd = request.form.get("password")
+    re_passwd = request.form.get("confirm-password")
 
     if isBlank(email) or isBlank(passwd) or isBlank(re_passwd) or passwd != re_passwd:
-        render_template('index.html')
+        return redirect('/signup/msg/passwordMissMatch')
+    if not is_valid_password(passwd):
+        return redirect('/signup/msg/wrongPassword')
     try:
         dbConnector.executeSQL("INSERT INTO users (email,password_hash,created_at) VALUES ('%s','%s',CURRENT_TIMESTAMP)" % (email, passwd))
     except Exception:
-        render_template('index.html')
+        return redirect('/signup/msg/cantCreateUser')
 
     #return template("user_view", user_name=email)
     return render_template('quiz.html', user_name=email, questions=generate_random_questions(3))

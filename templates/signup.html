@@ -18,6 +18,8 @@
 </head>
 <body>
 
+<input type="hidden" id="alertMsg" name="alertMsg" value="{{ alert_msg }}">
+
 <div id="container">
     <div id="logo">
         <a href="index.html"> &copy; FutQuiz</a>
@@ -27,7 +29,7 @@
         <h2>Account Signup</h2>
         <p>Become a member and enjoy exclusive promotions.</p>
 
-        <form action="#" method="POST">
+        <form action="/new_user_view" method="POST">
             <label for="fullname">Full Name</label>
             <input type="text" id="fullname" placeholder="Enter fullname" name="fullname" required>
 
@@ -49,6 +51,17 @@
         <span> &copy; FutQuiz</span>
     </footer>
 </div>
+
+<script type="text/javascript">
+	document.onreadystatechange = function() {
+		if(document.readyState=='loaded' || document.readyState=='complete') {
+			var msg = document.getElementById("alertMsg").value;
+			if (msg) {
+				alert(msg);
+			}
+		}
+	}
+</script>
 
 </body>
 </html>
