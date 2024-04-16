@@ -105,7 +105,7 @@ def user_view():
     else:
         uname = userId
 
-    return render_template('quiz.html', user_name=uname, questions=generate_random_questions(3))
+    return render_template('main.html')
 
 
 @app.route('/new_user_view', methods=['POST'])
@@ -124,7 +124,7 @@ def new_user_view():
         return redirect('/signup/msg/cantCreateUser')
 
     #return template("user_view", user_name=email)
-    return render_template('quiz.html', user_name=email, questions=generate_random_questions(3))
+    return render_template('main.html')
 
 
 # Define route for the quiz page
