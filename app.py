@@ -89,7 +89,7 @@ def user_view():
     Of course, that page should post the userId.
     '''
     if isBlank(userId):
-        uname = request.form.get("uname")
+        uname = request.form.get("uname").lower()
         passwd = request.form.get("psw")
         try:
             results = dbConnector.executeSQL("SELECT password_hash FROM users WHERE email='%s'" % uname)
@@ -110,7 +110,7 @@ def user_view():
 
 @app.route('/new_user_view', methods=['POST'])
 def new_user_view():
-    email = request.form.get("email")
+    email = request.form.get("email").lower()
     passwd = request.form.get("password")
     re_passwd = request.form.get("confirm-password")
 
