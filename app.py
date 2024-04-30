@@ -11,7 +11,7 @@ import datetime
 
 dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "zfdix2uu")
 
-'''#Connection too PgAdmin database
+'''#Connection to PgAdmin database
 def connect_to_database():
     try:
         conn = psycopg2.connect(
