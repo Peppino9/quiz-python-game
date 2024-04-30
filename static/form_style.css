@@ -50,6 +50,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 50%;
   }
+
+  .signup-form input[type="text"],
+  .signup-form input[type="email"],
+  .signup-form input[type="password"] {
+    font-family:Arial, Helvetica, sans-serif
+  }
   
   .signup-form h2, .signup-form p {
     text-align: center;
