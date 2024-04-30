@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+    <!--My Css-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_style.css') }}">
+    <link rel="stylesheet" href="/static/main_style.css">
+    <title>FutQuiz</title>
+</head>
+<body>
+    <div id="container">
+        <div id="logo">
+            <a href="/">FutQuiz</a>
+        </div>
+
+        <div id="banner">
+            <div id="banner-content">
+                <h4>Welcome to FutQuiz</h4>
+                <h1>PICK YOUR <span>DIFFICULTY LEVEL</span></h1>
+            </div>
+            <div id="difficulty-buttons">
+                <button class="difficulty-button">EASY</button>
+                <button class="difficulty-button">MEDIUM</button>
+                <button class="difficulty-button">HARD</button>
+            </div>
+            <div id="leaderboard">
+                <h3>LEADER BOARD</h3>
+                <ol>
+                    <!-- Example of list items -->
+                    <li>1. John_1213 SCORE: 1200</li>
+                    <li>2. PABLO_3453 SCORE: 1100</li>
+                    <!-- Add more list items here -->
+                </ol>
+            </div>
+            <div id="banner-desc">
+                <button onclick="window.location.href = 'suggest_question.html';">SUGGEST QUESTION</button>
+            </div>
+        </div>
+
+        <footer>
+            <span> &copy; FutQuiz</span>
+        </footer>
+    </div>
+</body>
+</html>
