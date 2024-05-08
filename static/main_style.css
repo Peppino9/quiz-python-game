@@ -1,0 +1,95 @@
+/* styles.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdfdfd;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #2a3eb1;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+}
+
+header p {
+    font-size: 18px;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.difficulty-selection {
+    text-align: center;
+}
+
+button.difficulty {
+    background-color: rgb(191 146 91);    
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    display: block;
+    
+}
+
+button.difficulty:hover {
+  background-color: rgb(191 146 91);
+  color: white;
+}
+
+#leaderboard {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+#leaderboard h2 {
+    color: #333;
+}
+
+#leaderboard ol {
+    list-style-type: none;
+    padding: 0;
+}
+
+#leaderboard li {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+#leaderboard li:last-child {
+    border-bottom: none;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+}

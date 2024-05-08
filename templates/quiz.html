@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <title>Quiz</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 
 <body>
+<div>
+    <h2>Welcome: <b>{{ user_name }}</b></h2>
     <h1>Quiz</h1>
     <form action="#" method="post">
         {% for question in questions %}
@@ -22,5 +27,6 @@
         {% endfor %}
         <button type="submit">Submit</button>
     </form>
+</div>
 </body>
 </html>

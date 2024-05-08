@@ -1,22 +1,62 @@
-/* styles.css */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Luckiest Guy', Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5; /* Light gray background color */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    min-height: 100vh; /* Ensure full height of viewport */
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%; /* 80% of the viewport width */
+    max-width: 600px; /* Maximum width of the container */
+    margin: auto; /* Center horizontally */
+    padding: 40px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background for better readability */
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+
+.header {
+    margin-bottom: 20px;
 }
 
 h1 {
+    font-family: 'Luckiest Guy', Helvetica, Arial, sans-serif;
     color: #333;
+    margin-bottom: 20px;
 }
 
-/* Add more styles as needed */
+.btn {
+    /*display: inline-block;*/
+    display: block; /* Display buttons as block elements */
+    /* padding: 10px 20px; */
+    width: 100%; /* Full width buttons */
+    padding: 15px 0; /* Adjust padding */
+    background-color: #1877f2; /* Facebook blue color */
+    color: #fff;
+    text-decoration: none;
+    border: none; /* Remove button border */
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease; /* Smooth transition for button hover effect */
+}
+
+.btn:hover {
+    background-color: #166fe5;
+}
+
+.login-section {
+    margin-top: 20px;
+}

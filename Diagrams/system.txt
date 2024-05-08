@@ -1,0 +1,17 @@
+PlantUML code (diagram code for use system diagram) [with webserver]: 
+
+@startuml
+package "FutQuiz System" {
+    [Användare] as User
+    [Webbserver] as Server
+    [Databas] as Database
+    [HTML/CSS] as Interface
+    [Python & Flask] as Flask
+
+    User -- Server : Användarinteraktioner
+    Server -- Database : Datahantering
+    Server -- Flask : Dataåtkomst
+    Flask -- Database : Dataåtkomst
+    Server -- Interface : Gränssnittshantering
+}
+@enduml

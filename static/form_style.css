@@ -1,0 +1,112 @@
+/* General Reset and Typography */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Luckiest Guy', Helvetica, Arial, sans-serif, "Poppins";
+  }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Background and Container Setup */
+  #container {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("assets/futquiz.jpeg");
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Aligns header at top, footer at bottom */
+  }
+  
+  /* Header */
+  #logo {
+    background-color: rgba(61, 30, 30, 0.3);
+    padding: 20px 0 20px 20px;
+  }
+  
+  #logo a {
+    text-decoration: none;
+    color: rgb(191 146 91);
+    font-size: 33px;
+
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px rgb(191 146 91);
+    border-bottom: 1px solid rgb(191 146 91);
+  }
+  
+  /* Signup Form */
+  .signup-form {
+    align-self: center;
+    background-color: rgba(59, 35, 35, 0.7);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 50%;
+  }
+
+  .signup-form input[type="text"],
+  .signup-form input[type="email"],
+  .signup-form input[type="password"] {
+    font-family:Arial, Helvetica, sans-serif
+  }
+  
+  .signup-form h2, .signup-form p {
+    text-align: center;
+  }
+  
+  .signup-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  input[type="text"], input[type="email"], input[type="password"] {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  button.continue-button {
+    padding: 10px;
+    background-color: rgb(191 146 91);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button.continue-button:hover {
+    background-color: rgb(245, 212, 171);
+  }
+  
+  /* Footer */
+  footer {
+    background: rgb(20 27 37);
+    text-align: right;
+    padding: 15px;
+    position: relative; /* Adjust based on the layout */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    #logo a {
+      font-size: 24px;
+    }
+  
+    .signup-form {
+      margin: 10px;
+      padding: 10px;
+    }
+  
+    #banner-desc, #banner-content {
+      margin: 0;
+      padding: 10px;
+    }
+  }
