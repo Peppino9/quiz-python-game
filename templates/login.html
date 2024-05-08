@@ -14,6 +14,7 @@
         <title>Sign In - FutQuiz</title>
     </head>
     <body>
+        <input type="hidden" id="alertMsg" name="alertMsg" value="{{ alert_msg }}">
         <div class="form-container">
             <header class="form-header">
                 <a href="/">FutQuiz</a>
@@ -38,6 +39,16 @@
             <footer class="form-footer">
                 © FutQuiz
             </footer>
+            <script type="text/javascript">
+                document.onreadystatechange = function() {
+                    if(document.readyState=='loaded' || document.readyState=='complete') {
+                        var msg = document.getElementById("alertMsg").value;
+                        if (msg) {
+                            alert(msg);
+                        }
+                    }
+                }
+            </script>
         </div>
     </body>
 </html>

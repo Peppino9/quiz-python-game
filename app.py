@@ -81,7 +81,7 @@ def show_users():
         users = dbConnector.executeSQL("SELECT user_id, email FROM users")  # Adjust the query with correct column names
         return render_template('users.html', users=users)
     except Exception as e:
-        return str(e)  # For debugging, in production handle errors gracefully
+        return str(e)
 
 
 def is_valid_password(password):
@@ -93,7 +93,7 @@ def is_valid_password(password):
     
 
 
-# Define route for the homepage
+# Homepage Route
 @app.route('/', methods=['GET'])
 def index():
     """Render the index page. (Render initial page with a form to start a new game.)"""
@@ -175,11 +175,11 @@ def new_user_view():
     except Exception:
         return redirect('/signup/msg/cantCreateUser')
 
-    #return template("user_view", user_name=email)
+    #return template
     return render_template('main.html')
 
 
-# Define route for the quiz page
+# Quiz page r
 def get_questions(difficulty):
     if difficulty == "medium":
         return questions_medium
@@ -238,4 +238,3 @@ def show_results():
 if __name__ == '__main__':
     app.run(debug=True)
     
-# Database connection and cursor setup
