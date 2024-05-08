@@ -1,61 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+            rel="stylesheet">
 
-    <!-- GOOGLE FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-
-    <!--My Css-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='form_style.css') }}">
-    <link rel="stylesheet" href="/static/form_style.css">
-    <title>sign in - FutQuiz</title>
-</head>
-<body>
-
-<input type="hidden" id="alertMsg" name="alertMsg" value="{{ alert_msg }}">
-
-<div id="container">
-    <div id="logo">
-        <a href="/"> &copy; FutQuiz</a>
-    </div>
-
-    <div class="signup-form">
-        <h2>Sign in to your account</h2>
-        <p>Become a member and enjoy exclusive promotions.</p>
-
-        <form action="/user_view" method="POST">
-          <label for="uname"><b>Username (email)</b></label>
-          <input type="text" id="Username" placeholder="Enter Username" name="uname" required>
-    
-          <label for="psw"><b>Password</b></label>
-          <input type="password" id="password" placeholder="Enter Password" name="psw" required>
-
-            <button type="submit" class="continue-button">Login</button>
-        </form>
-    </div>
-
-    <!--Footer, contains ending part of the website-->
-    <footer>
-        <span> &copy; FutQuiz</span>
-    </footer>
-</div>
-
-<script type="text/javascript">
-	document.onreadystatechange = function() {
-		if(document.readyState=='loaded' || document.readyState=='complete') {
-			var msg = document.getElementById("alertMsg").value;
-			if (msg) {
-				alert(msg);
-			}
-		}
-	}
-</script>
-
-</body>
+        <link rel="stylesheet" href="/static/form_style.css">
+        <title>Sign In - FutQuiz</title>
+    </head>
+    <body>
+        <div class="form-container">
+            <header class="form-header">
+                <a href="/">FutQuiz</a>
+            </header>
+            <div class="form-content">
+                <h2>Sign in to your account</h2>
+                <p>Sign in to enjoy exclusive promotions.</p>
+                <form action="/user_view" method="POST">
+                    <div class="input-group">
+                        <label for="Username">Username (email)</label>
+                        <input type="text" id="Username"
+                            placeholder="Enter Username" name="uname" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password"
+                            placeholder="Enter Password" name="psw" required>
+                    </div>
+                    <button type="submit" class="submit-button">Login</button>
+                </form>
+            </div>
+            <footer class="form-footer">
+                © FutQuiz
+            </footer>
+        </div>
+    </body>
 </html>
