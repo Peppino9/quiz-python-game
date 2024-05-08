@@ -1,5 +1,7 @@
 # app.py Import Flask and render_template
-from flask import Flask, render_template, request, redirect
+import random
+import time
+from flask import Flask, render_template, request, redirect, session, url_for
 from quiz_logic import generate_random_questions  # Importing function from quiz_logic module
 from data.questions import question_bank
 from db_connection_utils import DbUtils
@@ -8,28 +10,78 @@ import psycopg2
 from psycopg2 import OperationalError
 import datetime
 
+app = Flask(__name__)
+app.secret_key = 'default_secret_key'
 
-dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "9uefrczo")
+questions_easy = [
+    {
+      "question": "Which team won the UEFA Champions League in 2017?",
+      "options": ["Real Madrid", "Barcelona", "Bayern Munich", "Liverpool"],
+      "answer": "Real Madrid"
+    },
+    {
+      "question": "Who is the all-time leading goal scorer for the German national team?",
+      "options": ["Miroslav Klose", "Thomas Muller", "Gerd Muller", "Lukas Podolski"],
+      "answer": "Miroslav Klose"
+    },
+    {
+      "question": "Which country hosted the UEFA European Championship in 2008?",
+      "options": ["Austria & Switzerland", "Germany", "France", "Spain"],
+      "answer": "Austria & Switzerland"
+    }
+]
 
-'''#Connection to PgAdmin database
-def connect_to_database():
-    try:
-        conn = psycopg2.connect(
-            database="futquiz",
-            host="pgserver.mau.se",
-            user="aj2020",
-            password="zfdix2uu",
-            port="5432" 
-        )
-        return conn
-    except OperationalError as e:
-        print(f"Error connecting to the database: {e}")
-        return None'''
+questions_medium = [
+    {
+      "question": "Who is the only goalkeeper to have won the Ballon d'Or?",
+      "options": ["Lev Yashin", "Iker Casillas", "Manuel Neuer", "Gianluigi Buffon"],
+      "answer": "Lev Yashin"
+    },
+    {
+      "question": "Which club has won the most Bundesliga titles?",
+      "options": ["Bayern Munich", "Borussia Dortmund", "Borussia Monchengladbach", "Hamburger SV"],
+      "answer": "Bayern Munich"
+    },
+    {
+      "question": "Who is the youngest player to win the UEFA European Championship?",
+      "options": ["Renato Sanches", "Wayne Rooney", "Mario Gotze", "Cristiano Ronaldo"],
+      "answer": "Renato Sanches"
+    }
+]
+
+questions_hard = [
+    {
+      "question": "Which player has the most appearances in the UEFA Champions League?",
+      "options": ["Cristiano Ronaldo", "Iker Casillas", "Lionel Messi", "Xavi Hernandez"],
+      "answer": "Iker Casillas"
+    },
+    {
+      "question": "Which Italian club has won the most Serie A titles?",
+      "options": ["AC Milan", "Juventus", "Inter Milan", "AS Roma"],
+      "answer": "Juventus"
+    },
+    {
+      "question": "Who is the all-time leading goal scorer for the Spanish national team?",
+      "options": ["David Villa", "Fernando Torres", "Raul", "David Silva"],
+      "answer": "David Villa"
+    }
+]
+
+dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "oxbk46tq")
 
 def isBlank(checked_str):
     if not checked_str or checked_str.strip() == "" or checked_str.strip() == "None":
         return True
     return False
+
+
+@app.route('/users') #Ej slutfört, ska bli LEADERBOARD HÄR.
+def show_users():
+    try:
+        users = dbConnector.executeSQL("SELECT user_id, email FROM users")  # Adjust the query with correct column names
+        return render_template('users.html', users=users)
+    except Exception as e:
+        return str(e)
 
 
 def is_valid_password(password):
@@ -38,10 +90,10 @@ def is_valid_password(password):
     return has_upper and has_digit
 
 
-# Create Flask app / # Create an instance of the Flask class
-app = Flask(__name__)
+    
 
-# Define route for the homepage
+
+# Homepage Route
 @app.route('/', methods=['GET'])
 def index():
     """Render the index page. (Render initial page with a form to start a new game.)"""
@@ -123,23 +175,66 @@ def new_user_view():
     except Exception:
         return redirect('/signup/msg/cantCreateUser')
 
-    #return template("user_view", user_name=email)
+    #return template
     return render_template('main.html')
 
 
-# Define route for the quiz page
-@app.route('/quiz')
-def quiz():
-    """Render the quiz page with random questions."""
-    num_questions = 3  # Adjust the number of questions as needed
-    if num_questions > len(question_bank):
-        return "Error: Not enough questions available for the quiz."
-    else:
-        questions = generate_random_questions(num_questions)
-        return render_template('quiz.html', questions=questions)
+# Quiz page r
+def get_questions(difficulty):
+    if difficulty == "medium":
+        return questions_medium
+    elif difficulty == "hard":
+        return questions_hard
+    return questions_easy
 
-# Run the Flask application
+@app.route('/start_quiz', methods=['POST'])
+def start_quiz():
+    difficulty = request.form['difficulty']
+    questions = get_questions(difficulty)
+    random.shuffle(questions)
+    session['questions'] = questions
+    session['current_question'] = 0
+    session['score'] = 0
+    session['start_time'] = time.time()
+    session['difficulty'] = difficulty
+    return redirect(url_for('show_question'))
+
+@app.route('/question')
+def show_question():
+    if 'current_question' not in session or session['current_question'] >= len(session['questions']):
+        return redirect(url_for('show_results'))
+    question = session['questions'][session['current_question']]
+    return render_template('question.html', question=question)
+
+@app.route('/next_question', methods=['GET'])
+def next_question():
+    if 'current_question' in session and session['current_question'] < len(session['questions']) - 1:
+        session['current_question'] += 1
+        session['start_time'] = time.time()  # Reset start time for the new question
+        return redirect(url_for('show_question'))
+    return redirect(url_for('show_results'))
+
+@app.route('/answer', methods=['POST'])
+def answer():
+    if 'current_question' not in session or session['current_question'] >= len(session['questions']):
+        return redirect(url_for('show_results'))
+    current = session['questions'][session['current_question']]
+    choice = request.form['option']
+    correct = choice == current['answer']
+    multiplier = {'easy': 1, 'medium': 1.5, 'hard': 2}[session['difficulty']]
+    elapsed_time = max(30 - (time.time() - session['start_time']), 0)
+    if correct:
+        session['score'] += int(elapsed_time * multiplier)
+    session['start_time'] = time.time()  # Reset the timer
+    return render_template('answer.html', question=current, chosen=choice, correct=correct)
+
+@app.route('/results')
+def show_results():
+    score = session.get('score', 0)
+    session.clear()
+    return render_template('results.html', score=score)
+
+# Run the application
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
     
-# Database connection and cursor setup

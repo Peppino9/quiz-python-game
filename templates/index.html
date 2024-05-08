@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-
-    <!--My Css-->
+    <!--Css-->
     <link rel="stylesheet" href="{{ url_for('static', filename='index_style.css') }}">
     <link rel="stylesheet" href="/static/index_style.css">
     <title>FutQuiz</title>
 </head>
 <body>
-    <!--The landing page setup-->
     <div id="container">
         <div id="logo">
             <a href="/"> &copy; FutQuiz</a>
@@ -35,14 +31,13 @@
                     So let the game start you need only to login to start the game and if you don't have an accounte just register and the you are free to go.
                     Futquiz wish you all the luck with your football lerning.
                 </p>
-                <!--Button to start the process of generating movies-->
+                <!--Knapp till börja sign up eller sign in-->
                 <h4>Sigin or Sign up to test your football</h4>
 
                 <button onclick="window.location.href = 'login';"><span>Login</span></button> 
                 <button onclick="window.location.href = 'signup';"><span>Sign Up</span></button>
             </div>
         </div>
-    <!--Footer, contains ending part of the website-->
     <footer>
         <span> &copy; FutQuiz</span>
     </footer>
