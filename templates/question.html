@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Question</title>
+        <link rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success"
+                style="width:100%"></div>
+        </div>
+        <p id="timer-display">30 seconds</p>
+
+        <h1>{{ question['question'] }}</h1>
+        <form action="/answer" method="post" id="answer-form">
+            {% for option in question['options'] %}
+            <button type="submit" name="option" value="{{ option }}"
+                class="answer-btn">{{ option }}</button>
+            {% endfor %}
+        </form>
+        <button id="next-question-btn" style="display:none;"
+            onclick="window.location.href='/next_question'">Next
+            Question</button>
+
+        <script>
+var seconds = 30; // Antal sekunder per fråga
+
+function count() {
+    var timerDisplay = document.getElementById("timer-display");
+    var answerButtons = document.querySelectorAll('.answer-btn');
+    var nextButton = document.getElementById("next-question-btn");
+
+    if (seconds === 0) {
+        clearInterval(timer);
+        timerDisplay.innerHTML = "Time's up!";
+        // Stäng av knappar vid tidens slut
+        answerButtons.forEach(function(button) {
+            button.disabled = true;
+        });
+        //  Knappen "Next question" visas
+        nextButton.style.display = 'block';
+        return;
+    }
+
+    seconds--; // Sekund minskningen 
+    var displaySeconds = seconds < 10 ? "0" + seconds : seconds; // Zero 
+    timerDisplay.innerHTML = displaySeconds + " seconds"; // Display uppdateras
+}
+
+var timer = setInterval(count, 1000); // Timer börjar
+</script>
+
+    </body>
+</html>

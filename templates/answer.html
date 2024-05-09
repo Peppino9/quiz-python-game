@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Answer</title>
+    </head>
+    <body>
+        <h1>Question: {{ question['question'] }}</h1>
+        <p>You selected: {{ chosen }}</p>
+        <p>Correct answer: {{ question['answer'] }}</p>
+        <p>Correct: {{ correct }}</p>
+        <button onclick="window.location.href='/next_question'">Next
+            Question</button>
+    </body>
+</html>

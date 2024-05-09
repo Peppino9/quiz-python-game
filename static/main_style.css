@@ -1,6 +1,6 @@
-/* styles.css */
+/* General styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Poppins", sans-serif; /* Adjusted to use Google Fonts consistently */
     background-color: #fdfdfd;
     color: #333;
     margin: 0;
@@ -8,88 +8,98 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-header {
-    background-color: #2a3eb1;
-    color: #fff;
+  }
+  
+  header {
+    background-color: #0056b3; /* Slightly darker blue for better readability */
+    color: #ffffff;
     padding: 20px;
     text-align: center;
-}
-
-header h1 {
+  }
+  
+  header h1,
+  header p {
     margin: 0;
-    padding: 0;
-}
-
-header p {
-    font-size: 18px;
-}
-
-main {
+  }
+  
+  header p {
+    font-size: 16px;
+    opacity: 0.8;
+  }
+  
+  main {
     flex: 1;
     padding: 20px;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column; /* Changed for mobile-first approach */
     align-items: center;
-}
-
-.difficulty-selection {
-    text-align: center;
-}
-
-button.difficulty {
-    background-color: rgb(191 146 91);    
+  }
+  
+  /* Buttons and interactions */
+  button {
+    background-color: #00a6ed; /* Bootstrap primary color for consistency */
+    color: white;
     border: none;
     border-radius: 5px;
-    color: white;
-    padding: 15px 30px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
+    padding: 12px 24px;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 8px;
     cursor: pointer;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    display: block;
-    
-}
-
-button.difficulty:hover {
-  background-color: rgb(191 146 91);
-  color: white;
-}
-
-#leaderboard {
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker on hover */
+  }
+  
+  /* Leaderboard styling */
+  #leaderboard {
+    width: 100%; /* Full width to accommodate smaller screens */
+    max-width: 500px; /* Maximum width to maintain form on larger screens */
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-}
-
-#leaderboard h2 {
+    margin-top: 20px;
+  }
+  
+  #leaderboard h2 {
     color: #333;
-}
-
-#leaderboard ol {
+    text-align: center;
+  }
+  
+  #leaderboard ol {
     list-style-type: none;
     padding: 0;
-}
-
-#leaderboard li {
+  }
+  
+  #leaderboard li {
     padding: 8px;
     border-bottom: 1px solid #ccc;
-}
-
-#leaderboard li:last-child {
+  }
+  
+  #leaderboard li:last-child {
     border-bottom: none;
-}
-
-footer {
+  }
+  
+  footer {
     background-color: #333;
     color: #fff;
     text-align: center;
     padding: 10px 20px;
-}
+    width: 100%;
+  }
+  
+  /* Media Queries for responsive adjustments */
+  @media (min-width: 768px) {
+    main {
+      flex-direction: row; /* Horizontal layout on larger screens */
+      justify-content: space-around;
+    }
+  
+    header p {
+      font-size: 18px; /* Larger text on wider screens */
+    }
+  }
+  
