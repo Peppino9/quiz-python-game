@@ -9,7 +9,7 @@ from psycopg2 import OperationalError
 import datetime
 
 
-dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "9uefrczo")
+dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "oxbk46tq")
 
 '''#Connection to PgAdmin database
 def connect_to_database():
