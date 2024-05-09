@@ -51,8 +51,6 @@ questions_medium = [
 
 dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "oxbk46tq")
 
-dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "oxbk46tq")
-
 def isBlank(checked_str):
     if not checked_str or checked_str.strip() == "" or checked_str.strip() == "None":
         return True
