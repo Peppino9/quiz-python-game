@@ -1,62 +1,199 @@
-body {
-    font-family: 'Luckiest Guy', Helvetica, Arial, sans-serif;
-    background-color: #f0f2f5; /* Light gray background color */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+* {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    min-height: 100vh; /* Ensure full height of viewport */
-}
+    box-sizing: border-box;
+  }
+  html,
+  body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("assets/futquiz.jpeg");
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+  }
+  #banner-content h1 span{
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px white;
 
-.container {
-    width: 80%; /* 80% of the viewport width */
-    max-width: 600px; /* Maximum width of the container */
-    margin: auto; /* Center horizontally */
+  }
+  
+/* HEADER */
+  #logo a{
+    text-decoration: none;
+    color: rgb(191 146 91);
+    font-size: 33px;
+    font-family: 'Luckiest Guy';
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px rgb(191 146 91);
+    border-bottom: 1px solid rgb(191 146 91); 
+  }
+  #logo{
+    background-color: rgba(61, 30, 30, 0.3);
+    padding:20px 0 20px 20px;
+  }
+
+  /* Rubriken i index */
+    h4{
+    padding-top: 35px; 
+    color: rgb(191 146 91); 
+    
+    
+  }
+/*indexs container*/
+  #container {
+    height: 70vh;
+    color: white;
+    width: 60%; 
+    margin: auto; 
     padding: 40px;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background for better readability */
     border-radius: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
-
-
-.header {
-    margin-bottom: 20px;
-}
-
-h1 {
-    font-family: 'Luckiest Guy', Helvetica, Arial, sans-serif;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.btn {
-    /*display: inline-block;*/
-    display: block; /* Display buttons as block elements */
-    /* padding: 10px 20px; */
-    width: 100%; /* Full width buttons */
-    padding: 15px 0; /* Adjust padding */
-    background-color: #1877f2; /* Facebook blue color */
-    color: #fff;
-    text-decoration: none;
-    border: none; /* Remove button border */
+/*textrutan i container*/
+  #banner-desc{
+    background-color: rgba(59, 35, 35, 0.3);
+    padding-left: 80px;
+    margin-top: 30px;
+    padding-bottom: 15px;
+    padding-top: 15px;
     border-radius: 5px;
-    margin-right: 10px;
-    transition: background-color 0.3s ease; /* Smooth transition for button hover effect */
-}
+    border-left: 4px solid rgb(191 146 91);
+    font-weight: 700;
+    padding-right: 50px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 1); 
+    line-height: 30px;
 
-.btn:hover {
-    background-color: #166fe5;
-}
-
-.login-section {
+    
+  }
+  /*knapparna för log/sign in */
+  #banner-desc button {
     margin-top: 20px;
-}
+    background-color: transparent;
+    border: 3px solid rgb(191 146 91);
+    color: rgb(191 146 91) !important;
+    padding: 8px 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  /*effekten för knapparna hela vägen till nästa kommentar*/
+  #banner-desc button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+    font-family: 'Luckiest Guy', Helvetica, Arial, sans-serif, "Poppins";
+  }
+  
+  #banner-desc button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  #banner-desc button:hover span {
+    padding-right: 25px;
+  }
+  
+  #banner-desc button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+    /*effekten tar slut här*/
+  h1 {
+    font-family: 'Luckiest Guy', Helvetica, Arial, sans-serif, "Poppins";
+    color: rgb(191 146 91);
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px rgb(191 146 91);
+    border-bottom: 1px solid rgb(191 146 91);
+  }
+
+
+
+  footer {
+    position: absolute;
+    background:rgb(20 27 37);
+    text-align:right;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height:50px;
+    padding:15px;
+  }
+
+  footer span{
+    font-size: 20px;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px white;
+  }
+  footer {
+    background-color: #333;
+    color: #fff;
+    text-align: right;
+    padding: 10px 20px;
+    width: 100%;
+  }
+/*S1*/
+
+
+/*log in / sign in*/
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }  
+  .form-content {
+    background: #695b3f;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .form-content h2,
+  .form-content p {
+    margin-bottom: 1.5rem;
+  }
+  
+  .input-group {
+    margin-bottom: 1rem;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+
