@@ -11,8 +11,8 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
             rel="stylesheet" />
         <link rel="stylesheet"
-            href="{{ url_for('static', filename='style.css') }}">
-        <link rel="stylesheet" href="/static/main_style.css">
+            href="{{ url_for('static', filename='index_style.css') }}">
+        <link rel="stylesheet" href="/static/index_style.css">
         <title>FutQuiz</title>
     </head>
     <body>
@@ -44,6 +44,8 @@
                     class="btn btn-primary">View
                     Users</a>
             </section>
+            <button type="submit" name="action" value="suggest-question"
+                    class="Suggest-question">Suggest Question</button>
         </main>
         <footer>
             <p>© 2024 FutQuiz. Alla rättigheter förbehållna.</p>

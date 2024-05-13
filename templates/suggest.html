@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+            rel="stylesheet">
+
+        <link rel="stylesheet" href="/static/form_style.css">
+        <title>Question Submission - FutQuiz</title>
+    </head>
+    <body>
+        <input type="hidden" id="alertMsg" name="alertMsg" value="{{ alert_msg }}">
+        <div class="form-container">
+            <header class="form-header">
+                <a href="/">FutQuiz</a>
+            </header>
+            <div class="form-content">
+                <h2>Suggest a Question</h2>
+                <p>Help us expand our question database by suggesting your own question!</p>
+                <form action="/submit_question" method="POST">
+                    <div class="input-group">
+                        <label for="difficulty">Difficulty</label>
+                        <select id="difficulty" name="difficulty" required>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category" required>
+                            <option value="allsvenskan">Allsvenskan</option>
+                            <option value="champions-league">Champions-league</option>
+                            <option value="world-cup">World-cup</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="question">Your Question</label>
+                        <input type="text" id="question" name="question" placeholder="Write your question here" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="correct_answer">Correct Answer</label>
+                        <input type="text" id="correct_answer" name="correct_answer" placeholder="Enter the correct answer" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="wrong_answer1">Wrong Answer 1</label>
+                        <input type="text" id="wrong_answer1" name="wrong_answer1" placeholder="Enter a wrong answer" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="wrong_answer2">Wrong Answer 2</label>
+                        <input type="text" id="wrong_answer2" name="wrong_answer2" placeholder="Enter another wrong answer" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="wrong_answer2">Wrong Answer 3</label>
+                        <input type="text" id="wrong_answer3" name="wrong_answer3" placeholder="Enter another wrong answer" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Submit Question</button>
+                </form>
+            </div>
+            <footer class="form-footer">
+                © FutQuiz
+            </footer>
+            <script type="text/javascript">
+                document.onreadystatechange = function() {
+                    if(document.readyState=='loaded' || document.readyState=='complete') {
+                        var msg = document.getElementById("alertMsg").value;
+                        if (msg) {
+                        alert(msg);
+                        }
+                    }
+                }
+            </script>
+        </div>
+    </body>
+</html>
