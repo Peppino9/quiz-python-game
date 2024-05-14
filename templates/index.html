@@ -9,38 +9,38 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <!--Css-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='index_style.css') }}">
-    <link rel="stylesheet" href="/static/index_style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
     <title>FutQuiz</title>
 </head>
+
 <body>
-    <div id="container">
+    <header>
         <div id="logo">
             <a href="/"> &copy; FutQuiz</a>
         </div>
+    </header>  
+        <div id="container">
+            <div id="banner">
+                <div id="banner-content">
+                    <h1>TAKE YOUR <span>FOOTBALL</span> <span>KNOWLEDGE TO</span> ANOTHER LEVEL</h1>
+                </div>
+                    <div id="banner-desc">
+                        <p>
+                            Here is the football quiz you need to take your football knowledge to another level. 
+                            FutQuiz will learn you all the importent information you need to call yourself a football fan. 
+                            So let the game start you need only to login to start the game and if you don't have an accounte just register and the you are free to go.
+                            Futquiz wish you all the luck with your football lerning.
+                        </p>
+                        <h4>Sigin or Sign up to test your football</h4>
 
-        <div id="banner">
-            <div id="banner-content">
-                <h4>Welcome to FutQuiz</h4>
-                <h1>TAKE YOUR <span>FOOTBALL</span> <span>KNOWLEDGE TO</span> ANOTHER LEVEL</h1>
-            </div>
-            <div id="banner-desc">
-                <p>
-                    Here is the football quiz you need to take your football knowledge to another level. 
-                    FutQuiz will learn you all the importent information you need to call yourself a football fan. 
-                    So let the game start you need only to login to start the game and if you don't have an accounte just register and the you are free to go.
-                    Futquiz wish you all the luck with your football lerning.
-                </p>
-                <!--Knapp till börja sign up eller sign in-->
-                <h4>Sigin or Sign up to test your football</h4>
-
-                <button onclick="window.location.href = 'login';"><span>Login</span></button> 
-                <button onclick="window.location.href = 'signup';"><span>Sign Up</span></button>
+                        <button onclick="window.location.href = 'login';"><span>Login</span></button> 
+                        <button onclick="window.location.href = 'signup';"><span>Sign Up</span></button>
+                    </div>
             </div>
         </div>
-    <footer>
+<footer>
         <span> &copy; FutQuiz</span>
-    </footer>
-    </div>
+</footer>
 </body>
 </html>
