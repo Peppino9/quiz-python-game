@@ -119,7 +119,7 @@
 
 
   footer {
-    position: absolute;
+    position: fixed;
     background:rgb(20 27 37);
     text-align:right;
     bottom: 0;
@@ -154,7 +154,7 @@
     min-height: 100vh;
   }  
   .form-content {
-    background: #695b3f;
+    background: #137743;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -184,16 +184,20 @@
   .submit-button {
     width: 100%;
     padding: 12px;
-    background-color: #007bff;
+    background-color: #059149;
     color: white;
-    border: none;
+    border:solid;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
   }
   
   .submit-button:hover {
-    background-color: #0056b3;
+    background-color: #ffffff7c;
   }
   
+
+  
+
+
 

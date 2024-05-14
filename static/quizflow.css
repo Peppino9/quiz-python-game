@@ -1,0 +1,61 @@
+/*Main-Userview, Quizflow- Main, Questions, quiz, results, users*/
+.difficulty {
+    background-color: #137743;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.difficulty:hover {
+    background-color: #105a2f;
+}
+
+#leaderboard {
+    margin-top: 20px;
+}
+
+#leaderboard ol {
+    list-style: none;
+    padding: 0;
+}
+
+#leaderboard li {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+}
+
+.Suggest-question {
+    background-color: white;
+    color: #137743;
+    border: 2px solid #137743;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.Suggest-question:hover {
+    background-color: #137743;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #137743;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background-color: #105a2f;
+}
+
