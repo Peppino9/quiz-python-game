@@ -13,8 +13,13 @@
     </head>
     <body>
         <header>
-            <h1>Welcome, {{ session.username }}</h1>
-            <p>Välj svårighetsgrad och testa dina kunskaper!</p>
+            <div id="logo">
+                <a href="/"> &copy; FutQuiz</a>
+                <h1>Welcome, {{ session.username }}</h1>
+                <p>Välj svårighetsgrad och testa dina kunskaper!</p>
+            </div>
+         
+           
         </header>
         <main>
             <h1>Please select the difficulty ➡️</h1>
@@ -40,8 +45,10 @@
                     class="btn btn-primary">View
                     Users</a>
             </section>
-            <button type="submit" name="action" value="suggest-question"
-                    class="Suggest-question">Suggest Question</button>
+            <section><button type="submit" name="action" value="suggest-question"
+                class="Suggest-question">Suggest Question</button>
+            </section>
+
         </main>
         <footer>
             <p>© 2024 FutQuiz. Alla rättigheter förbehållna.</p>

@@ -154,7 +154,8 @@
     min-height: 100vh;
   }  
   .form-content {
-    background: #137743;
+    background: rgb(74,227,147);
+    background: radial-gradient(circle, rgba(74,227,147,1) 0%, rgba(19,119,67,1) 100%);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -166,6 +167,7 @@
   .form-content h2,
   .form-content p {
     margin-bottom: 1.5rem;
+    color: white;
   }
   
   .input-group {
