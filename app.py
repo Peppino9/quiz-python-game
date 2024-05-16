@@ -124,10 +124,14 @@ def user_view():
     if isBlank(userId):
         uname = request.form.get("uname").lower()
         passwd = request.form.get("psw")
+        isAdmin = False
         try:
             results = dbConnector.executeSQL("SELECT password_hash FROM users WHERE email='%s'" % uname)
             if not results:
-                return redirect("/login/msg/wrongUserPass")
+                results = dbConnector.executeSQL("SELECT password FROM admins WHERE email='%s'" % uname)
+                if not results:
+                    return redirect("/login/msg/wrongUserPass")
+                isAdmin = True
             for row in results:
                 c_pass = row[0]
                 if c_pass != passwd:
@@ -138,7 +142,13 @@ def user_view():
     else:
         uname = userId
 
+    if isAdmin:
+        return render_template('admin.html')
     return render_template('main.html')
+
+@app.route('/admin')
+def admin_view():
+    print('')
 
 
 @app.route('/new_user_view', methods=['POST'])
