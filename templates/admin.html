@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="admin-container">
+    <div class="admin-header">
+        <h2>Admin Panel</h2>
+    </div>
+    <h2>Approve/Deny Suggestions</h2>
+    <div id="suggestions-list">
+        <div class="suggestion-row">
+            <span>Suggestion Frågor</span>
+            <div class="suggestion-actions">
+                <button class="action-btn" >Approve</button>
+                <button class="action-btn delete-btn" >Deny</button>
+            </div>
+        </div>
+    </div>
+    <h2>Questions</h2>
+    <div id="questions-list">
+        <div class="question-row">
+            <span>Question 1: What is the capital of France?</span>
+            <div class="question-actions">
+                <input type="checkbox" name="mark-question" value="1">
+                <button class="action-btn delete-btn" onclick="deleteQuestion(1)">Delete</button>
+            </div>
+        </div>
+    </div>
+    <h2>Add a New Question</h2>
+    <form class="add-question-form" action=" " method="post">
+        <input type="text" name="question" placeholder="Enter the question" required>
+        <textarea name="options" placeholder="Enter options separated by commas" required></textarea>
+        <input type="text" name="answer" placeholder="Enter the correct answer" required>
+        <button type="submit">Add Question</button>
+    </form>
+</div>
+</body>
+</html>
