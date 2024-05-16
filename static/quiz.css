@@ -1,0 +1,177 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.quiz-container {
+    background: radial-gradient(circle, rgba(74,227,147,1) 0%, rgba(19,119,67,1) 100%);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#next-question-btn {
+    display: block;
+    margin: 20px auto;
+    background-color: #137743;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.meny-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+.question-number {
+    color: white;
+    font-size: 20px;
+    margin: 0;
+}
+
+h1 {
+    color: white;
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+.answer-btn {
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    color: #4caf50;
+    font-size: 18px;
+    margin: 10px 0;
+    padding: 20px;
+    width: 100%;
+    max-width: 700px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.answer-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.progress-bar {
+    height: 20px;
+    transition: width 1s, background-color 1s;
+    border-radius: 10px;
+}
+
+.progress-bar-success {
+    background-color: green;
+}
+
+.progress-bar-warning {
+    background-color: yellow;
+}
+
+.progress-bar-danger {
+    background-color: red;
+}
+
+#timer-display {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin: 20px 0;
+    transition: color 0.5s, transform 0.5s;
+}
+
+.warning {
+    color: red;
+    transform: scale(1.2);
+}
+
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.menu-btn {
+    background-color: #137743;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s;
+}
+footer {
+    position: fixed;
+    background:#00813e;
+    text-align:right;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height:50px;
+    padding:15px;
+  }
+
+  footer span{
+    font-size: 20px;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px white;
+    font-family: 'Luckiest Guy';
+
+  }
+  footer {
+    background-color: #00813e;
+    color: #fff;
+    text-align: right;
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+
+/* Responsiveness */
+@media (min-width: 768px) {
+    main {
+        flex-direction: row; 
+        justify-content: space-around;
+    }
+
+    header p {
+        font-size: 18px; 
+    }
+}

@@ -2,7 +2,6 @@
 import random
 import time
 from flask import Flask, render_template, request, redirect, session, url_for
-from quiz_logic import generate_random_questions  # Importing function from quiz_logic module
 from data.questions import question_bank
 from db_connection_utils import DbUtils
 

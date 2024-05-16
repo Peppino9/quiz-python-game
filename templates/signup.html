@@ -6,37 +6,40 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/static/style.css">
         <title>Account
             Signup - FutQuiz</title>
     </head>
     <body>
+        <header>
+            <div id="logo">
+                <a href="/"> &copy; FutQuiz</a>
+            </div>
+        </header>  
         <input type="hidden" id="alertMsg" name="alertMsg" value="{{ alert_msg }}">
         
         <div class="form-container">
-            <header class="form-header">
-                <a href="/">FutQuiz</a>
-            </header>
             <div class="form-content">
                 <h2>Account Signup</h2>
                 <p>Become a member and enjoy exclusive promotions.</p>
                 <form action="/new_user_view" method="POST">
                     <div class="input-group">
                         <label for="fullname">Full Name</label>
+                        <br><br>
                         <input type="text" id="fullname"
                             placeholder="Enter Full Name" name="fullname"
                             required>
                     </div>
                     <div class="input-group">
                         <label for="email">Email Address</label>
+                        <br><br>
                         <input type="email" id="email" placeholder="Enter Email"
                             name="email" required>
                     </div>
                     <div class="input-group">
                         <label for="password">Create a Password</label>
+                        <br><br>
                         <input type="password" id="password"
                             placeholder="Enter Password" name="password"
                             required>
@@ -44,6 +47,7 @@
                     <div class="input-group">
                         <label for="confirm-password">Confirm Your
                             Password</label>
+                        <br><br>
                         <input type="password" id="confirm-password"
                             placeholder="Confirm Password"
                             name="confirm-password" required>

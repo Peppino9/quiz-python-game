@@ -7,18 +7,19 @@
         <!-- GOOGLE FONT -->
         <link rel="preconnect" href="https://fonts.googleapis.com/" />
         <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet" />
-        <link rel="stylesheet"
-            href="{{ url_for('static', filename='style.css') }}">
-        <link rel="stylesheet" href="/static/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='quizflow.css') }}">
         <title>FutQuiz</title>
     </head>
     <body>
         <header>
-            <h1>Welcome, {{ session.username }}</h1>
-            <p>Välj svårighetsgrad och testa dina kunskaper!</p>
+            <div id="logo">
+                <a href="/"> &copy; FutQuiz</a>
+                <h1>Welcome, {{ session.username }}</h1>
+                <p>Välj svårighetsgrad och testa dina kunskaper!</p>
+            </div>
+         
+           
         </header>
         <main>
             <h1>Please select the difficulty ➡️</h1>
