@@ -3,54 +3,113 @@
     <head>
         <meta charset="UTF-8">
         <title>Question</title>
-        <link rel="stylesheet"
-            href="{{ url_for('static', filename='quizflow.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
     </head>
     <body>
-        <div class="progress progress-striped active">
-            <div class="progress-bar progress-bar-success"
-                style="width:100%"></div>
+        <div class="quiz-container">
+            <div class="header">
+                <button class="meny-button" onclick="toggleMenu()">Meny ⏸️</button>
+                <h2 class="question-number">Question 1/10</h2>
+            </div>
+            <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-success" id="progress-bar" style="width:100%;"></div>
+            </div>
+            <p id="timer-display" class="countdown">30 seconds</p>
+
+            <h1>{{ question['question'] }}</h1>
+            <form action="/answer" method="post" id="answer-form">
+                {% for option in question['options'] %}
+                <button type="submit" name="option" value="{{ option }}" class="answer-btn">{{ option }}</button>
+                {% endfor %}
+            </form>
+            <button id="next-question-btn" style="display:none;" onclick="nextQuestion()">Next Question</button>
         </div>
-        <p id="timer-display">30 seconds</p>
-
-        <h1>{{ question['question'] }}</h1>
-        <form action="/answer" method="post" id="answer-form">
-            {% for option in question['options'] %}
-            <button type="submit" name="option" value="{{ option }}"
-                class="answer-btn">{{ option }}</button>
-            {% endfor %}
-        </form>
-        <button id="next-question-btn" style="display:none;"
-            onclick="window.location.href='/next_question'">Next
-            Question</button>
-
+        <div id="menu-overlay" class="menu-overlay">
+            <div class="menu-box">
+                <button onclick="resumeGame()" class="menu-btn">Continue</button>
+                <button onclick="endGame()" class="menu-btn">End Game</button>
+            </div>
+        </div>
         <script>
-var seconds = 30; // Antal sekunder per fråga
+            var seconds = 30; // Antal sekunder per fråga
+            var initialSeconds = seconds; //Spara sekunderna för uträkning - för progressbar ska röra sig
 
-function count() {
-    var timerDisplay = document.getElementById("timer-display");
-    var answerButtons = document.querySelectorAll('.answer-btn');
-    var nextButton = document.getElementById("next-question-btn");
+            function count() {
+                var timerDisplay = document.getElementById("timer-display");
+                var answerButtons = document.querySelectorAll('.answer-btn');
+                var nextButton = document.getElementById("next-question-btn");
+                var progressBar = document.getElementById("progress-bar");
 
-    if (seconds === 0) {
-        clearInterval(timer);
-        timerDisplay.innerHTML = "Time's up!";
-        // Stäng av knappar vid tidens slut
-        answerButtons.forEach(function(button) {
-            button.disabled = true;
-        });
-        //  Knappen "Next question" visas
-        nextButton.style.display = 'block';
-        return;
-    }
+                if (seconds === 0) {
+                    clearInterval(timer);
+                    timerDisplay.innerHTML = "Time's up!";
+                    // Stäng av knapparna vid tidens slut
+                    answerButtons.forEach(function(button) {
+                        button.disabled = true;
+                    });
+                    // Knappen "Next question" visas
+                    nextButton.style.display = 'block';
+                    return;
+                }
 
-    seconds--; // Sekund minskningen 
-    var displaySeconds = seconds < 10 ? "0" + seconds : seconds; // Zero 
-    timerDisplay.innerHTML = displaySeconds + " seconds"; // Display uppdateras
-}
+                seconds--; // Sekund minskningen
+                var displaySeconds = seconds < 10 ? "0" + seconds : seconds; // Zero
+                timerDisplay.innerHTML = displaySeconds + " seconds"; // Display uppdateras
 
-var timer = setInterval(count, 1000); // Timer börjar
-</script>
+                // Progressbaren uppdateras
+                var progressPercent = (seconds / initialSeconds) * 100;
+                progressBar.style.width = progressPercent + "%";
 
+                // Progressbaren ändrar färger ju mindre tid som finns
+                if (progressPercent <= 30) {
+                    progressBar.classList.remove("progress-bar-success", "progress-bar-warning");
+                    progressBar.classList.add("progress-bar-danger");
+                } else if (progressPercent <= 60) {
+                    progressBar.classList.remove("progress-bar-success");
+                    progressBar.classList.add("progress-bar-warning");
+                }
+
+                // 
+                if (seconds <= 10) {
+                    timerDisplay.classList.add("warning");
+                } else {
+                    timerDisplay.classList.remove("warning");
+                }
+            }
+
+            var timer = setInterval(count, 1000); // Timer börjar
+
+            function nextQuestion() {
+                seconds = initialSeconds;
+                clearInterval(timer);
+                timer = setInterval(count, 1000);
+                document.getElementById('next-question-btn').style.display = 'none';
+                document.querySelectorAll('.answer-btn').forEach(function(button) {
+                    button.disabled = false;
+                });
+            }
+
+            function toggleMenu() {
+                var menuOverlay = document.getElementById("menu-overlay");
+                if (menuOverlay.style.display === "block") {
+                    menuOverlay.style.display = "none";
+                    timer = setInterval(count, 1000); // Timer forstätter rulla
+                } else {
+                    menuOverlay.style.display = "block";
+                    clearInterval(timer); // Pausa timer
+                }
+            }
+
+            function resumeGame() {
+                document.getElementById("menu-overlay").style.display = "none";
+                timer = setInterval(count, 1000); // Timer forstätter med spelet
+            }
+
+            function endGame() {
+                // Avsluta spel
+                alert("Game ended.");
+                window.location.href = '/main.html';
+            }
+        </script>
     </body>
 </html>
