@@ -165,8 +165,8 @@ def new_user_view():
 def get_questions(difficulty):
     if difficulty == "medium":
         return questions_medium
-    elif difficulty == "hard":
-        return questions_hard
+    #elif difficulty == "hard":
+        #return questions_hard
     return questions_easy
 
 @app.route('/start_quiz', methods=['POST'])
@@ -187,6 +187,30 @@ def show_question():
         return redirect(url_for('show_results'))
     question = session['questions'][session['current_question']]
     return render_template('question.html', question=question)
+
+@app.route('/suggest')
+def suggest():
+    return render_template('suggest.html')
+
+@app.route('/submit_question', methods=['POST'])
+def submit_question():
+    difficulty = int(request.form.get("difficulty"))
+    print(difficulty)
+    category = request.form.get("category")
+    question = request.form.get("question")
+    answer1 = request.form.get("answer1")
+    answer2 = request.form.get("answer2")
+    answer3 = request.form.get("answer3")
+    answer4 = request.form.get("answer4")
+    CorrectAnswer = int(request.form.get("CorrectAnswer"))
+    print(CorrectAnswer)
+    try:
+        dbConnector.executeSQL("INSERT INTO Questionz (Question,ANS1,ANS2,ANS3,ANS4,CorrectAns,CAT,Level,Accepted) VALUES ('%s','%s','%s','%s','%s','%d','%s','%d',FALSE)" %
+                               (question, answer1, answer2, answer3, answer4, CorrectAnswer, category, difficulty))
+    except Exception as e:
+        print('ERROR: %s' % (str(e)))
+        return redirect('/suggest')
+    return render_template('main.html')
 
 @app.route('/next_question', methods=['GET'])
 def next_question():
@@ -218,5 +242,5 @@ def show_results():
 
 # Run the application
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
     
