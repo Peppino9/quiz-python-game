@@ -6,7 +6,7 @@
   html,
   body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url("assets/futquiz.jpeg");
+      url("assets/stadium.jpg");
     background-position: center;
     background-size: cover;
     height: 100%;
@@ -22,24 +22,21 @@
 /* HEADER */
   #logo a{
     text-decoration: none;
-    color: rgb(191 146 91);
+    color: #00813e;
     font-size: 33px;
     font-family: 'Luckiest Guy';
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 2px rgb(191 146 91);
-    border-bottom: 1px solid rgb(191 146 91); 
+    -webkit-text-stroke: 2px #ffffff;
+    border-bottom: 1px solid#ffffff; 
   }
   #logo{
-    background-color: rgba(61, 30, 30, 0.3);
+    background-color:#00813e;
     padding:20px 0 20px 20px;
   }
 
   /* Rubriken i index */
     h4{
-    padding-top: 35px; 
-    color: rgb(191 146 91); 
-    
-    
+    padding-top: 35px;  
   }
 /*indexs container*/
   #container {
@@ -63,7 +60,7 @@
     padding-bottom: 15px;
     padding-top: 15px;
     border-radius: 5px;
-    border-left: 4px solid rgb(191 146 91);
+    border-left: 4px solid #00813e;
     font-weight: 700;
     padding-right: 50px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 1); 
@@ -75,8 +72,8 @@
   #banner-desc button {
     margin-top: 20px;
     background-color: transparent;
-    border: 3px solid rgb(191 146 91);
-    color: rgb(191 146 91) !important;
+    border: 3px solid#00813e;
+    color:#00813e !important;
     padding: 8px 20px;
     font-weight: 600;
     cursor: pointer;
@@ -110,17 +107,17 @@
     /*effekten tar slut här*/
   h1 {
     font-family: 'Luckiest Guy', Helvetica, Arial, sans-serif, "Poppins";
-    color: rgb(191 146 91);
+    color:#059149;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 2px rgb(191 146 91);
-    border-bottom: 1px solid rgb(191 146 91);
+    -webkit-text-stroke: 2px #00813e;
+    border-bottom: 1px solid #00813e;
   }
 
 
 
   footer {
     position: fixed;
-    background:rgb(20 27 37);
+    background:#00813e;
     text-align:right;
     bottom: 0;
     left: 0;
@@ -135,7 +132,7 @@
     -webkit-text-stroke: 1px white;
   }
   footer {
-    background-color: #333;
+    background-color: #00813e;
     color: #fff;
     text-align: right;
     padding: 10px 20px;
@@ -199,7 +196,6 @@
   }
   
 
-  
 
 
 
