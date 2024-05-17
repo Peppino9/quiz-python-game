@@ -69,7 +69,7 @@ def is_valid_password(password):
     has_digit = any(char.isdigit() for char in password)
     return has_upper and has_digit
 
-def build_admin_questions_list():
+def build_admin_questions_list(adminName):
     admin_questions_list = []
     try:
         results = dbConnector.executeSQL("SELECT * FROM Questionz WHERE Accepted=FALSE")
@@ -80,6 +80,7 @@ def build_admin_questions_list():
             ans.append(row[3])
             ans.append(row[4])
             admin_questions_list.append(render_template("admin_question_template.html",
+                                                        admin=adminName,
                                                         question=row[0],
                                                         answers=ans,
                                                         rightAns=row[5],
@@ -163,13 +164,14 @@ def user_view():
         uname = userId
 
     if isAdmin:
-        q_list = build_admin_questions_list()
+        q_list = build_admin_questions_list(uname)
         return render_template('admin.html', admin=uname, questions_list=q_list)
     return render_template('main.html', username=uname)
 
 @app.route('/admin', methods=['POST', 'GET'])
 def admin_view():
-    adminUser = request.form.get("admin")
+    adminUser = request.form.get("adminId")
+    print('Admin: %s' % adminUser)
     if isBlank(adminUser):
         return redirect('/login')
     qName = request.form.get("q_name")
@@ -185,7 +187,7 @@ def admin_view():
             dbConnector.executeSQL("DELETE FROM Questionz WHERE Question='%s'" % delQ)
         except Exception as e:
             print("ERROR: %s" % str(e))
-    q_list = build_admin_questions_list()
+    q_list = build_admin_questions_list(adminUser)
     return render_template('admin.html', admin=adminUser, questions_list=q_list)
 
 @app.route('/new_user_view', methods=['POST'])

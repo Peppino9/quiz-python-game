@@ -1,6 +1,6 @@
 <section>
     <form action="/admin" method="post">
-        <input type="hidden" id="admin" name="admin" value="{{ admin }}">
+        <input type="hidden" id="adminId" name="adminId" value="{{ admin }}">
         <p>{{ question }}</p>
         <input type="hidden" id="q_name" name="q_name" value="{{ question }}">
         <ul>
@@ -14,7 +14,7 @@
         <button class="action-btn" type="submit">Approve</button>
     </form>
     <form action="/admin" method="post">
-        <input type="hidden" id="admin" name="admin" value="{{ admin }}">
+        <input type="hidden" id="adminId" name="adminId" value="{{ admin }}">
         <input type="hidden" id="deleteQuestion" name="deleteQuestion" value="{{ question }}">
         <button class="action-btn" type="submit">Delete</button>
     </form>
