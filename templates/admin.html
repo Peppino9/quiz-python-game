@@ -10,10 +10,14 @@
 <body>
 <div class="admin-container">
     <div class="admin-header">
-        <h2>Admin Panel</h2>
+        <h2>Admin Panel: {{admin}}</h2>
     </div>
     <h2>Approve/Deny Suggestions</h2>
-    <div id="suggestions-list">
+
+    {% for q in questions_list %}
+        {{q | safe}}
+    {% endfor %}
+    <!--div id="suggestions-list">
         <div class="suggestion-row">
             <span>Suggestion Frågor</span>
             <div class="suggestion-actions">
@@ -38,7 +42,7 @@
         <textarea name="options" placeholder="Enter options separated by commas" required></textarea>
         <input type="text" name="answer" placeholder="Enter the correct answer" required>
         <button type="submit">Add Question</button>
-    </form>
+    </form-->
 </div>
 </body>
 </html>

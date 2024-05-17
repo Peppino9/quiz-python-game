@@ -64,14 +64,10 @@ def show_users():
     except Exception as e:
         return str(e)
 
-
 def is_valid_password(password):
     has_upper = any(char.isupper() for char in password)
     has_digit = any(char.isdigit() for char in password)
     return has_upper and has_digit
-
-
-    
 
 
 # Homepage Route
@@ -110,7 +106,7 @@ def signup(alert=""):
     return render_template('signup.html', alert_msg=alert_message)
 
 
-@app.route('/user_view', methods=['POST'])
+@app.route('/user_view', methods=['POST', 'GET'])
 def user_view():
     userId = request.form.get("userId")
     uname = None
@@ -122,7 +118,10 @@ def user_view():
     Of course, that page should post the userId.
     '''
     if isBlank(userId):
-        uname = request.form.get("uname").lower()
+        try:
+            uname = request.form.get("uname").lower()
+        except Exception:
+            return redirect('/login')
         passwd = request.form.get("psw")
         isAdmin = False
         try:
@@ -143,13 +142,30 @@ def user_view():
         uname = userId
 
     if isAdmin:
-        return render_template('admin.html')
-    return render_template('main.html')
+        q_list = build_admin_questions_list()
+        return render_template('admin.html', admin=uname, questions_list=q_list)
+    return render_template('main.html', username=uname)
 
-@app.route('/admin')
+@app.route('/admin', methods=['POST', 'GET'])
 def admin_view():
-    print('')
+    adminUser = request.form.get("admin")
+    if isBlank(adminUser):
+        return redirect('/login')
+    qName = request.form.get("q_name")
+    delQ = request.form.get("deleteQuestion")
 
+    if not isBlank(qName):
+        try:
+            dbConnector.executeSQL("UPDATE Questionz SET Accepted=TRUE WHERE Question='%s'" % qName)
+        except Exception as e:
+            print("ERROR: %s" % str(e))
+    elif not isBlank(delQ):
+        try:
+            dbConnector.executeSQL("DELETE FROM Questionz WHERE Question='%s'" % delQ)
+        except Exception as e:
+            print("ERROR: %s" % str(e))
+    q_list = build_admin_questions_list()
+    return render_template('admin.html', admin=adminUser, questions_list=q_list)
 
 @app.route('/new_user_view', methods=['POST'])
 def new_user_view():
@@ -167,7 +183,7 @@ def new_user_view():
         return redirect('/signup/msg/cantCreateUser')
 
     #return template
-    return render_template('main.html')
+    return render_template('main.html', username=email)
 
 
 # Quiz page r
