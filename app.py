@@ -69,6 +69,27 @@ def is_valid_password(password):
     has_digit = any(char.isdigit() for char in password)
     return has_upper and has_digit
 
+def build_admin_questions_list():
+    admin_questions_list = []
+    try:
+        results = dbConnector.executeSQL("SELECT * FROM Questionz WHERE Accepted=FALSE")
+        for row in results:
+            ans = []
+            ans.append(row[1])
+            ans.append(row[2])
+            ans.append(row[3])
+            ans.append(row[4])
+            admin_questions_list.append(render_template("admin_question_template.html",
+                                                        question=row[0],
+                                                        answers=ans,
+                                                        rightAns=row[5],
+                                                        level=row[7],
+                                                        cat=row[6]))
+    except Exception as e:
+        print("ERROR: %s" % str(e))
+
+    return admin_questions_list
+
 
 # Homepage Route
 @app.route('/', methods=['GET'])

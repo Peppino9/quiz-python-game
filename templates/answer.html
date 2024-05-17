@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Answer</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='quizflow.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
     </head>
     <body>
             <div class="quiz-container">
@@ -11,8 +11,7 @@
             <p>You selected: {{ chosen }}</p>
             <p>Correct answer: {{ question['answer'] }}</p>
             <p>{{ correct }}</p>
-            <button onclick="window.location.href='/next_question'">Next
-                Question</button>
+            <button onclick="window.location.href='next_question'" id="next-question-btn">Next Question</button>
         </div>
     </body>
 </html>
