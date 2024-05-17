@@ -110,7 +110,7 @@ def signup(alert=""):
     return render_template('signup.html', alert_msg=alert_message)
 
 
-@app.route('/user_view', methods=['POST'])
+@app.route('/user_view', methods=['POST', 'GET'])
 def user_view():
     userId = request.form.get("userId")
     uname = None
