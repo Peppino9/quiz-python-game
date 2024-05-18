@@ -234,7 +234,8 @@ def show_question():
     if 'current_question' not in session or session['current_question'] >= len(session['questions']):
         return redirect(url_for('show_results'))
     question = session['questions'][session['current_question']]
-    return render_template('question.html', question=question)
+    score = session.get('score', 0)
+    return render_template('question.html', question=question, score=score)
 
 @app.route('/suggest')
 def suggest():
@@ -280,7 +281,7 @@ def answer():
     if correct:
         session['score'] += int(elapsed_time * multiplier)
     session['start_time'] = time.time()  # Reset the timer
-    return render_template('answer.html', question=current, chosen=choice, correct=correct)
+    return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'])
 
 @app.route('/results')
 def show_results():

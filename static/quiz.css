@@ -102,6 +102,12 @@ h1 {
     transition: color 0.5s, transform 0.5s;
 }
 
+#score-display {
+    color: rgb(237, 12, 12);
+    font-size: 20px;
+    margin: 0;
+}
+
 .warning {
     color: red;
     transform: scale(1.2);

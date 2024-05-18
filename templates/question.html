@@ -15,6 +15,7 @@
                 <div class="progress-bar progress-bar-success" id="progress-bar" style="width:100%;"></div>
             </div>
             <p id="timer-display" class="countdown">30 seconds</p>
+            <p id="score-display">Score: {{ score }}</p>
 
             <h1>{{ question['question'] }}</h1>
             <form action="/answer" method="post" id="answer-form">
