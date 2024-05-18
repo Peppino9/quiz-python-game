@@ -67,7 +67,7 @@ FutQuiz är ett webbaserat quizspel utvecklat i Python med Flask-ramverket. Proj
 Detta projekt är licensierat under [MIT License](https://github.com/Peppino9/quiz-python-game/blob/main/LICENSE).
 
 ## Kontakt
-Har du frågor eller förslag till förbättringar? Kontakta oss på [GitHub](https://github.com/Peppino9/).
+Har du frågor eller förslag till förbättringar? Kontakta oss på [GitHub - Simon](https://github.com/Peppino9/), [GitHub - Sayed](https://github.com/Biseda/), [GitHub - Abbe](https://github.com/Abbehamid/), [GitHub - Jerry](https://github.com/jaydiggz/), [GitHub - Thomas](https://github.com/thomasiordanescu/).
 
 
 
