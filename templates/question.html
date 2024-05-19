@@ -23,6 +23,7 @@
                 {% for option in question['options'] %}
                 <button type="submit" name="option" value="{{ option }}" class="answer-btn">{{ option }}</button>
                 {% endfor %}
+                <input type="hidden" id="userId" name="userId" value="{{ username }}">
             </form>
             <button id="next-question-btn" style="display:none;" onclick="nextQuestion()">Next Question</button>
         </div>

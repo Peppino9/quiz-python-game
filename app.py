@@ -11,7 +11,7 @@ import datetime
 
 app = Flask(__name__)
 app.secret_key = 'default_secret_key'
-questions_in_quiz = 3
+questions_in_quiz = 10
 
 questions_easy = [
     {
@@ -140,13 +140,13 @@ def user_view():
     In order to avoid requesting credentials again!!!
     Of course, that page should post the userId.
     '''
+    isAdmin = False
     if isBlank(userId):
         try:
             uname = request.form.get("uname").lower()
         except Exception:
             return redirect('/login')
         passwd = request.form.get("psw")
-        isAdmin = False
         try:
             results = dbConnector.executeSQL("SELECT password_hash FROM users WHERE email='%s'" % uname)
             if not results:
@@ -251,6 +251,8 @@ def start_quiz():
     level = map_level(difficulty)
     category = request.form['category']
     userId = request.form.get("userId")
+    if isBlank(userId):
+        return redirect('/login')
     #questions = get_questions(difficulty)
     #random.shuffle(questions)
     questions = get_questions_from_db(category, level)
@@ -259,25 +261,29 @@ def start_quiz():
     session['score'] = 0
     session['start_time'] = time.time()
     session['difficulty'] = difficulty
-    return redirect(url_for('show_question'))
-    #return show_question(userId)
+    #return redirect(url_for('show_question'))
+    return show_question(userId)
 
-@app.route('/question')
-def show_question():
+#@app.route('/question')
+def show_question(userId):
     if 'current_question' not in session or session['current_question'] >= len(session['questions']):
         return redirect(url_for('show_results'))
     question = session['questions'][session['current_question']]
     score = session.get('score', 0)
-    return render_template('question.html', question=question, score=score)
+    return render_template('question.html', question=question, score=score, username=userId)
 
 @app.route('/suggest', methods=['POST'])
 def suggest():
     userId = request.form.get("userId")
+    if isBlank(userId):
+        return redirect('/login')
     return render_template('suggest.html', user=userId)
 
 @app.route('/submit_question', methods=['POST'])
 def submit_question():
     userId = request.form.get("userId")
+    if isBlank(userId):
+        return redirect('/login')
     difficulty = int(request.form.get("difficulty"))
     category = request.form.get("category")
     question = request.form.get("question")
@@ -295,13 +301,21 @@ def submit_question():
         return render_template('suggest.html', user=userId)
     return render_template('main.html', username=userId)
 
-@app.route('/next_question', methods=['GET'])
+@app.route('/next_question', methods=['POST'])
 def next_question():
+    userId = request.form.get("userId")
+    if isBlank(userId):
+        return redirect('/login')
+    print('user nc: %s' % userId)
     if 'current_question' in session and session['current_question'] < len(session['questions']) - 1:
         session['current_question'] += 1
         session['start_time'] = time.time()  # Reset start time for the new question
-        return redirect(url_for('show_question'))
-    return redirect(url_for('show_results'))
+        #return redirect(url_for('show_question'))
+        question = session['questions'][session['current_question']]
+        score = session.get('score', 0)
+        return render_template('question.html', question=question, score=score, username=userId)
+    #return redirect(url_for('show_results'))
+    return show_results(userId)
 
 @app.route('/answer', methods=['POST'])
 def answer():
@@ -309,19 +323,17 @@ def answer():
         return redirect(url_for('show_results'))
     current = session['questions'][session['current_question']]
     choice = request.form['option']
+    userId = request.form.get("userId")
+    if isBlank(userId):
+        return redirect('/login')
+    print('user ans: %s' % userId)
     correct = choice == current['answer']
     multiplier = {'easy': 1, 'medium': 1.5, 'hard': 2}[session['difficulty']]
     elapsed_time = max(30 - (time.time() - session['start_time']), 0)
     if correct:
         session['score'] += int(elapsed_time * multiplier)
     session['start_time'] = time.time()  # Reset the timer
-    return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'])
-
-@app.route('/results')
-def show_results():
-    score = session.get('score', 0)
-    session.clear()
-    return render_template('results.html', score=score)
+    return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'], username=userId)
 
 # Run the application
 if __name__ == '__main__':
