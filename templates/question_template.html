@@ -1,5 +1,6 @@
         <div>
-            <p name="q{{ q_nbr }}">{{ !question }}</p>
+            <p>{{ question }}</p>
+            <input type="hidden" name="q{{ q_nbr }}" value="{{ question }}">
             <ul>
                 {% for answer in answers %}
                 <li><input type="radio" name="q{{ q_nbr }}answer" value="{{ forloop.counter }}">{{ answer }}</li>

@@ -11,6 +11,7 @@ import datetime
 
 app = Flask(__name__)
 app.secret_key = 'default_secret_key'
+questions_in_quiz = 3
 
 questions_easy = [
     {
@@ -247,14 +248,19 @@ def get_questions_from_db(cat, level):
 @app.route('/start_quiz', methods=['POST'])
 def start_quiz():
     difficulty = request.form['difficulty']
-    questions = get_questions(difficulty)
-    random.shuffle(questions)
+    level = map_level(difficulty)
+    category = request.form['category']
+    userId = request.form.get("userId")
+    #questions = get_questions(difficulty)
+    #random.shuffle(questions)
+    questions = get_questions_from_db(category, level)
     session['questions'] = questions
     session['current_question'] = 0
     session['score'] = 0
     session['start_time'] = time.time()
     session['difficulty'] = difficulty
     return redirect(url_for('show_question'))
+    #return show_question(userId)
 
 @app.route('/question')
 def show_question():
@@ -264,14 +270,15 @@ def show_question():
     score = session.get('score', 0)
     return render_template('question.html', question=question, score=score)
 
-@app.route('/suggest')
+@app.route('/suggest', methods=['POST'])
 def suggest():
-    return render_template('suggest.html')
+    userId = request.form.get("userId")
+    return render_template('suggest.html', user=userId)
 
 @app.route('/submit_question', methods=['POST'])
 def submit_question():
+    userId = request.form.get("userId")
     difficulty = int(request.form.get("difficulty"))
-    print(difficulty)
     category = request.form.get("category")
     question = request.form.get("question")
     answer1 = request.form.get("answer1")
@@ -285,8 +292,8 @@ def submit_question():
                                (question, answer1, answer2, answer3, answer4, CorrectAnswer, category, difficulty))
     except Exception as e:
         print('ERROR: %s' % (str(e)))
-        return redirect('/suggest')
-    return render_template('main.html')
+        return render_template('suggest.html', user=userId)
+    return render_template('main.html', username=userId)
 
 @app.route('/next_question', methods=['GET'])
 def next_question():
