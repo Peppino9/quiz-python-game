@@ -333,7 +333,7 @@ def answer():
     if correct:
         session['score'] += int(elapsed_time * multiplier)
     session['start_time'] = time.time()  # Reset the timer
-    return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'])
+    return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'], username=userId)
 
 #@app.route('/results')
 def show_results(userId):
