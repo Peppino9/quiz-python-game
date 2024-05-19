@@ -217,6 +217,33 @@ def get_questions(difficulty):
         #return questions_hard
     return questions_easy
 
+
+def map_level(difficulty):
+    if difficulty == "easy":
+        return 1
+    if difficulty == "medium":
+        return 2
+    if difficulty == "hard":
+        return 3
+    return 1
+
+def get_questions_from_db(cat, level):
+    sql_str = "SELECT * FROM Questionz WHERE ACCEPTED=TRUE AND Level=%d " % level
+    if not cat == "AllAround":
+        sql_str += "AND CAT='%s' " % cat
+    sql_str += "ORDER BY RANDOM() LIMIT %d" % questions_in_quiz
+    questions = []
+    try:
+        results = dbConnector.executeSQL(sql_str)
+        for row in results:
+            question = {"question" : "%s" % row[0],
+                        "options" : [row[1], row[2], row[3], row[4]],
+                        "answer" : row[row[5]]}
+            questions.append(question)
+    except Exception as e:
+        print("ERROR: %s" % str(e))
+    return questions
+
 @app.route('/start_quiz', methods=['POST'])
 def start_quiz():
     difficulty = request.form['difficulty']
