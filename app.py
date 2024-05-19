@@ -317,11 +317,15 @@ def answer():
     session['start_time'] = time.time()  # Reset the timer
     return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'])
 
-@app.route('/results')
-def show_results():
+#@app.route('/results')
+def show_results(userId):
     score = session.get('score', 0)
     session.clear()
-    return render_template('results.html', score=score)
+    try:
+        dbConnector.executeSQL("UPDATE Users SET Score=Score+%d WHERE Email='%s'" % (score, userId))
+    except Exception as e:
+        print('ERROR: %s' % (str(e)))
+    return render_template('results.html', score=score, username=userId)
 
 # Run the application
 if __name__ == '__main__':
