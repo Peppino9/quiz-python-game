@@ -18,10 +18,9 @@
                 <h1>Welcome, {{ username }}</h1>
                 <p>Välj svårighetsgrad och testa dina kunskaper!</p>
             </div>
-         
-           
         </header>
         <main>
+            <h2>User total score: {{ gen_score }}</h2>
             <h1>Please select the quiz type</h1>
             <form action="/start_quiz" method="post">
                 <!-- Easy Button >
