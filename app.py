@@ -2,7 +2,6 @@
 import random
 import time
 from flask import Flask, render_template, request, redirect, session, url_for
-from data.questions import question_bank
 from db_connection_utils import DbUtils
 
 import psycopg2
