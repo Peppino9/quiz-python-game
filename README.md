@@ -29,6 +29,7 @@ FutQuiz är ett webbaserat quizspel utvecklat i Python med Flask-ramverket. Proj
   - **static/** (Directory for CSS, and other static files)
     - **assets/**
       - **Stadium.jpg** (Image asset)
+      - **futquiz.jpeng** (Image asset)
     - **form_style.css** (CSS for form styles)
     - **quiz.css** (CSS for quiz layout)
     - **quizflow.css** (CSS for quiz flow)
