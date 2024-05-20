@@ -7,31 +7,44 @@
         <!-- GOOGLE FONT -->
         <link rel="preconnect" href="https://fonts.googleapis.com/" />
         <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet" />
-        <link rel="stylesheet"
-            href="{{ url_for('static', filename='style.css') }}">
-        <link rel="stylesheet" href="/static/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='quizflow.css') }}">
         <title>FutQuiz</title>
     </head>
     <body>
         <header>
-            <h1>Welcome, {{ session.username }}</h1>
-            <p>Välj svårighetsgrad och testa dina kunskaper!</p>
+            <div id="logo">
+                <a href="/"> &copy; FutQuiz</a>
+                <h1>Welcome, {{ username }}</h1>
+                <p>Välj svårighetsgrad och testa dina kunskaper!</p>
+            </div>
+         
+           
         </header>
         <main>
-            <h1>Please select the difficulty ➡️</h1>
+            <h1>Please select the quiz type</h1>
             <form action="/start_quiz" method="post">
-                <!-- Easy Button -->
+                <!-- Easy Button >
                 <button type="submit" name="difficulty" value="easy"
                     class="difficulty">Easy</button>
-                <!-- Medium Button -->
                 <button type="submit" name="difficulty" value="medium"
                     class="difficulty">Medium</button>
-                <!-- Hard Button -->
                 <button type="submit" name="difficulty" value="hard"
-                    class="difficulty">Hard</button>
+                    class="difficulty">Hard</button-->
+
+                <section style="float:left">
+                    <input type="radio" name="difficulty" value="easy" checked="checked">Easy</input>
+                    <input type="radio" name="difficulty" value="medium">Medium</input>
+                    <input type="radio" name="difficulty" value="hard">Hard</input>
+                </section>
+                <section style="float:left">
+                    <input type="radio" name="category" value="allsvenskan">Allsvenskan</input>
+                    <input type="radio" name="category" value="ChaLeague">Champions League</input>
+                    <input type="radio" name="category" value="world-cup">World Cup</input>
+                    <input type="radio" name="category" value="AllAround" checked="checked">All Around</input>
+                </section>
+                <input type="hidden" id="userId" name="userId" value="{{ username }}">
+                <button class="action-btn" type="submit">Start quiz</button>
             </form>
             <section id="leaderboard">
                 <h2>Toppspelare</h2>
@@ -44,8 +57,11 @@
                     class="btn btn-primary">View
                     Users</a>
             </section>
-            <button type="submit" name="action" value="suggest-question"
+            <form action="/suggest" method="post">
+                <input type="hidden" id="userId" name="userId" value="{{ username }}">
+                <button class="action-btn" type="submit" name="suggest-question" value="Suggest Question"
                     class="Suggest-question">Suggest Question</button>
+            </form>
         </main>
         <footer>
             <p>© 2024 FutQuiz. Alla rättigheter förbehållna.</p>

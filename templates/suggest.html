@@ -26,17 +26,18 @@
                     <div class="input-group">
                         <label for="difficulty">Difficulty</label>
                         <select id="difficulty" name="difficulty" required>
-                            <option value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="Hard">Hard</option>
+                            <option value="1">Easy</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Hard</option>
                         </select>
                     </div>
                     <div class="input-group">
                         <label for="category">Category</label>
                         <select id="category" name="category" required>
                             <option value="allsvenskan">Allsvenskan</option>
-                            <option value="champions-league">Champions-league</option>
+                            <option value="ChaLeague">Champions-league</option>
                             <option value="world-cup">World-cup</option>
+                            <option value="AllAround">All around</option>
                         </select>
                     </div>
                     <div class="input-group">
@@ -44,22 +45,31 @@
                         <input type="text" id="question" name="question" placeholder="Write your question here" required>
                     </div>
                     <div class="input-group">
-                        <label for="correct_answer">Correct Answer</label>
-                        <input type="text" id="correct_answer" name="correct_answer" placeholder="Enter the correct answer" required>
+                        <label for="answer1">Answer 1</label>
+                        <input type="text" id="answer1" name="answer1" placeholder="Enter answer" required>
                     </div>
                     <div class="input-group">
-                        <label for="wrong_answer1">Wrong Answer 1</label>
-                        <input type="text" id="wrong_answer1" name="wrong_answer1" placeholder="Enter a wrong answer" required>
+                        <label for="answer2">Answer 2</label>
+                        <input type="text" id="answer2" name="answer2" placeholder="Enter answer" required>
                     </div>
                     <div class="input-group">
-                        <label for="wrong_answer2">Wrong Answer 2</label>
-                        <input type="text" id="wrong_answer2" name="wrong_answer2" placeholder="Enter another wrong answer" required>
+                        <label for="answer3">Answer 3</label>
+                        <input type="text" id="answer3" name="answer3" placeholder="Enter answer" required>
                     </div>
                     <div class="input-group">
-                        <label for="wrong_answer2">Wrong Answer 3</label>
-                        <input type="text" id="wrong_answer3" name="wrong_answer3" placeholder="Enter another wrong answer" required>
+                        <label for="answer4">Answer 4</label>
+                        <input type="text" id="answer4" name="answer4" placeholder="Enter answer" required>
                     </div>
-                    
+                    <div class="input-group">
+                        <label for="CorrectAnswer">Correct answer</label>
+                        <select id="CorrectAnswer" name="CorrectAnswer" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="userId" name="userId" value="{{ user }}">
                     <button type="submit" class="submit-button">Submit Question</button>
                 </form>
             </div>
