@@ -276,8 +276,10 @@ def show_question(userId):
     if 'current_question' not in session or session['current_question'] >= len(session['questions']):
         return redirect(url_for('show_results'))
     question = session['questions'][session['current_question']]
+    question_number = session['current_question'] + 1
+    total_questions = len(session['questions'])
     score = session.get('score', 0)
-    return render_template('question.html', question=question, score=score, username=userId)
+    return render_template('question.html', question=question, question_number=question_number, total_questions=total_questions, score=score, username=userId)
 
 @app.route('/suggest', methods=['POST'])
 def suggest():
@@ -319,8 +321,10 @@ def next_question():
         session['start_time'] = time.time()  # Reset start time for the new question
         #return redirect(url_for('show_question'))
         question = session['questions'][session['current_question']]
+        question_number = session['current_question'] + 1
+        total_questions = len(session['questions'])
         score = session.get('score', 0)
-        return render_template('question.html', question=question, score=score, username=userId)
+        return render_template('question.html', question=question, question_number=question_number, total_questions=total_questions, score=score, username=userId)
     #return redirect(url_for('show_results'))
     return show_results(userId)
 
