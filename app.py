@@ -10,7 +10,7 @@ import datetime
 
 app = Flask(__name__)
 app.secret_key = 'default_secret_key'
-questions_in_quiz = 10
+questions_in_quiz = 3
 
 questions_easy = [
     {
@@ -166,7 +166,15 @@ def user_view():
     if isAdmin:
         q_list = build_admin_questions_list(uname)
         return render_template('admin.html', admin=uname, questions_list=q_list)
-    return render_template('main.html', username=uname)
+
+    try:
+        results = dbConnector.executeSQL("SELECT Score FROM users WHERE email='%s'" % uname)
+        for row in results:
+            if not isAdmin:
+                g_score = row[0]
+    except Exception as e:
+        print("ERROR: %s" % str(e))
+    return render_template('main.html', username=uname, gen_score=g_score)
 
 @app.route('/admin', methods=['POST', 'GET'])
 def admin_view():
