@@ -10,19 +10,6 @@ body {
     min-height: 100vh;
   }
   
-  #suggest-question button {
-    width: 100%;
-    max-width: 500px;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-}
-
-.suggest-question button {
-    width: 100%;
-    max-width: 200px;
-}
-  
   header {
     background-color: #137743; 
     color: #ffffff;
@@ -31,6 +18,8 @@ body {
   }
   #logo a{
     text-decoration: none;
+    position: absolute;
+    left: 20px;
     font-size: 33px;
     font-family: 'Luckiest Guy';
     -webkit-text-fill-color: transparent;
@@ -41,7 +30,9 @@ body {
     padding:20px 0 20px 20px;
   }
 
-  
+  #welcome{
+
+  }
 
   
   header h1,
@@ -107,10 +98,25 @@ body {
   #leaderboard li:last-child {
     border-bottom: none;
   }
+
+  #suggest-question button {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.suggest-question button {
+    width: 100%;
+    max-width: 200px;
+}
+  
   
   footer {
     position: fixed;
-    background:rgb(20 27 37);
+    color: #fff;
+    background:#137743;
     text-align:right;
     bottom: 0;
     left: 0;
