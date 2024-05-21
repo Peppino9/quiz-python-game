@@ -134,13 +134,15 @@ def user_view():
     userId = request.form.get("userId")
     uname = None
     passwd = None
-
+    score = 0
     '''
     This if statement is needed if the user is already logged in and it's redirected here from other page.
     In order to avoid requesting credentials again!!!
     Of course, that page should post the userId.
     '''
     isAdmin = False
+
+
     if isBlank(userId):
         try:
             uname = request.form.get("uname").lower()
@@ -148,13 +150,15 @@ def user_view():
             return redirect('/login')
         passwd = request.form.get("psw")
         try:
-            results = dbConnector.executeSQL("SELECT password_hash FROM users WHERE email='%s'" % uname)
+            results = dbConnector.executeSQL("SELECT password_hash, Score FROM users WHERE email='%s'" % uname)
             if not results:
                 results = dbConnector.executeSQL("SELECT password FROM admins WHERE email='%s'" % uname)
                 if not results:
                     return redirect("/login/msg/wrongUserPass")
                 isAdmin = True
+                
             for row in results:
+                score = row[1]
                 c_pass = row[0]
                 if c_pass != passwd:
                     return redirect("/login/msg/wrongUserPass")
@@ -163,11 +167,13 @@ def user_view():
             return redirect("/login/msg/loginError")
     else:
         uname = userId
-
+        results = dbConnector.executeSQL("SELECT password_hash, Score FROM users WHERE email='%s'" % uname)
+        for row in results:
+                score = row[1]
     if isAdmin:
         q_list = build_admin_questions_list(uname)
-        return render_template('admin.html', admin=uname, questions_list=q_list)
-    return render_template('main.html', username=uname)
+        return render_template('admin.html', admin=uname, questions_list=q_list, score=score)
+    return render_template('main.html', username=uname, score=score)
 
 @app.route('/admin', methods=['POST', 'GET'])
 def admin_view():
@@ -207,7 +213,7 @@ def new_user_view():
         return redirect('/signup/msg/cantCreateUser')
 
     #return template
-    return render_template('main.html', username=email)
+    return render_template('main.html', username=email, score=0)
 
 
 # Quiz page r
@@ -255,12 +261,13 @@ def start_quiz():
         return redirect('/login')
     #questions = get_questions(difficulty)
     #random.shuffle(questions)
-    questions = get_questions_from_db(category, level)
+    questions = get_questions_from_db(category, level) 
     session['questions'] = questions
     session['current_question'] = 0
     session['score'] = 0
     session['start_time'] = time.time()
     session['difficulty'] = difficulty
+    session['question_count'] = 1
     #return redirect(url_for('show_question'))
     return show_question(userId)
 
@@ -270,7 +277,8 @@ def show_question(userId):
         return redirect(url_for('show_results'))
     question = session['questions'][session['current_question']]
     score = session.get('score', 0)
-    return render_template('question.html', question=question, score=score, username=userId)
+    question_count = session['question_count']
+    return render_template('question.html', question=question, score=score, username=userId, question_count=question_count)
 
 @app.route('/suggest', methods=['POST'])
 def suggest():
@@ -292,28 +300,28 @@ def submit_question():
     answer3 = request.form.get("answer3")
     answer4 = request.form.get("answer4")
     CorrectAnswer = int(request.form.get("CorrectAnswer"))
-    print(CorrectAnswer)
     try:
         dbConnector.executeSQL("INSERT INTO Questionz (Question,ANS1,ANS2,ANS3,ANS4,CorrectAns,CAT,Level,Accepted) VALUES ('%s','%s','%s','%s','%s','%d','%s','%d',FALSE)" %
                                (question, answer1, answer2, answer3, answer4, CorrectAnswer, category, difficulty))
     except Exception as e:
         print('ERROR: %s' % (str(e)))
         return render_template('suggest.html', user=userId)
-    return render_template('main.html', username=userId)
+    return render_template('main.html', username=userId, score=0)
 
 @app.route('/next_question', methods=['POST'])
 def next_question():
     userId = request.form.get("userId")
+    session['question_count'] += 1
     if isBlank(userId):
         return redirect('/login')
-    print('user nc: %s' % userId)
+    # print('user nc: %s' % userId)
     if 'current_question' in session and session['current_question'] < len(session['questions']) - 1:
         session['current_question'] += 1
         session['start_time'] = time.time()  # Reset start time for the new question
         #return redirect(url_for('show_question'))
         question = session['questions'][session['current_question']]
-        score = session.get('score', 0)
-        return render_template('question.html', question=question, score=score, username=userId)
+        score = session['score']
+        return render_template('question.html', question=question, score=score, username=userId, question_count=session['question_count'])
     #return redirect(url_for('show_results'))
     return show_results(userId)
 
@@ -326,26 +334,27 @@ def answer():
     userId = request.form.get("userId")
     if isBlank(userId):
         return redirect('/login')
-    print('user ans: %s' % userId)
+    # print('user ans: %s' % userId)
     correct = choice == current['answer']
     multiplier = {'easy': 1, 'medium': 1.5, 'hard': 2}[session['difficulty']]
     elapsed_time = max(30 - (time.time() - session['start_time']), 0)
+    
     if correct:
-        session['score'] += int(elapsed_time * multiplier)
+        session['score'] += int((30 - elapsed_time) * multiplier)
     session['start_time'] = time.time()  # Reset the timer
-    return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'], username=userId)
+    return render_template('answer.html', question=current, question_count=session['question_count'], chosen=choice, correct=correct, score=session['score'], username=userId)
 
 #@app.route('/results')
 def show_results(userId):
     score = session.get('score', 0)
     session.clear()
+    session['my_score'] = score
     try:
         dbConnector.executeSQL("UPDATE Users SET Score=Score+%d WHERE Email='%s'" % (score, userId))
     except Exception as e:
         print('ERROR: %s' % (str(e)))
-    return render_template('results.html', score=score, username=userId)
+    return render_template('results.html', score=session['my_score'], username=userId)
 
 # Run the application
 if __name__ == '__main__':
     app.run(debug=False)
-    
