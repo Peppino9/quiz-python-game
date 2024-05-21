@@ -29,12 +29,42 @@ body {
   #logo{
     padding:20px 0 20px 20px;
   }
+  section {
+    padding: 10px;
+    margin: 5px;
+    background-color: #137743; 
+    border-radius: 5px; 
+    color: #fdfdfd;
+    font-family: "Poppins", sans-serif;
+}
 
-  #welcome{
 
+input[type='radio'] {
+    appearance: none; 
+    background-color: #fff; 
+    border: 2px solid #00fd08; 
+    border-radius: 50%; 
+    width: 20px; 
+    height: 20px; 
+    vertical-align: middle; 
+    margin-right: 8px; 
+    transition: background-color 0.3s, border-color 0.3s; 
+}
+
+input[type='radio']:checked {
+    background-color: #0ec968; 
+    border-color: #00fd08;
   }
 
-  
+input[type='radio'] + span {
+    cursor: pointer;
+    display: inline-block; 
+    padding: 2px 0;
+}
+
+input[type='radio']:focus + span {
+    outline: 1px dashed #aaa; 
+}
   header h1,
   header p {
     margin: 0;
@@ -78,6 +108,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-top: 20px;
+    color: black;
   }
   
   #leaderboard h2 {

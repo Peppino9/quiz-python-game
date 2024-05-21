@@ -25,15 +25,7 @@
             <h2>User total score: {{ gen_score }}</h2>
             <h1>Please select the quiz type</h1>
             <form action="/start_quiz" method="post">
-                <!-- Easy Button >
-                <button type="submit" name="difficulty" value="easy"
-                    class="difficulty">Easy</button>
-                <button type="submit" name="difficulty" value="medium"
-                    class="difficulty">Medium</button>
-                <button type="submit" name="difficulty" value="hard"
-                    class="difficulty">Hard</button-->
-
-                <section style="float:left">
+                <section id="buttns" style="float:left">
                     <input type="radio" name="difficulty" value="easy" checked="checked">Easy</input>
                     <input type="radio" name="difficulty" value="medium">Medium</input>
                     <input type="radio" name="difficulty" value="hard">Hard</input>
