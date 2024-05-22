@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+    <link rel="stylesheet" href="/static/quiz.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="header">
+            <h2>{{ username }}</h2>
+            <button class="meny-button" onclick="toggleMenu()">Meny ⏸️</button>
+            <h2 class="question-number">Question {{ question_number }}/{{ total_questions }}</h2>
+        </div>
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" id="progress-bar" style="width:100%;"></div>
+        </div>
+        <p id="timer-display" class="countdown">30 seconds</p>
+        <p id="score-display">Score: {{ score }}</p>
+
+        <h1>{{ question['question'] }}</h1>
+        <form action="/answer" method="post" id="answer-form">
+            {% for option in question['options'] %}
+            <button type="submit" name="option" value="{{ option }}" class="answer-btn">{{ option }}</button>
+            {% endfor %}
+            <input type="hidden" id="userId" name="userId" value="{{ username }}">
+        </form>
+        <button id="next-question-btn" style="display:none;" onclick="nextQuestion()">Next Question</button>
+    </div>
+    <div id="menu-overlay" class="menu-overlay">
+        <div class="menu-box">
+            <button onclick="resumeGame()" class="menu-btn">Continue</button>
+            <button onclick="endGame()" class="menu-btn">End Game</button>
+        </div>
+    </div>
+    <form id="next-question-form" action="/next_question" method="post" style="display:none;">
+        <input type="hidden" id="next-userId" name="userId" value="{{ username }}">
+    </form>
+    <script>
+        var seconds = 30; 
+        var initialSeconds = seconds;
+
+        function count() {
+            var timerDisplay = document.getElementById("timer-display");
+            var answerButtons = document.querySelectorAll('.answer-btn');
+            var nextButton = document.getElementById("next-question-btn");
+            var progressBar = document.getElementById("progress-bar");
+
+            if (seconds === 0) {
+                clearInterval(timer);
+                timerDisplay.innerHTML = "Time's up!";
+                answerButtons.forEach(function(button) {
+                    button.disabled = true;
+                });
+                nextButton.style.display = 'block';
+                return;
+            }
+
+            seconds--;
+            var displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+            timerDisplay.innerHTML = displaySeconds + " seconds";
+
+            var progressPercent = (seconds / initialSeconds) * 100;
+            progressBar.style.width = progressPercent + "%";
+
+            if (progressPercent <= 30) {
+                progressBar.classList.remove("progress-bar-success", "progress-bar-warning");
+                progressBar.classList.add("progress-bar-danger");
+            } else if (progressPercent <= 60) {
+                progressBar.classList.remove("progress-bar-success");
+                progressBar.classList.add("progress-bar-warning");
+            }
+
+            if (seconds <= 10) {
+                timerDisplay.classList.add("warning");
+            } else {
+                timerDisplay.classList.remove("warning");
+            }
+        }
+
+        var timer = setInterval(count, 1000);
+
+        function nextQuestion() {
+            var form = document.getElementById("next-question-form");
+            form.submit();
+        }
+
+        function toggleMenu() {
+            var menuOverlay = document.getElementById("menu-overlay");
+            if (menuOverlay.style.display === "block") {
+                menuOverlay.style.display = "none";
+                timer = setInterval(count, 1000);
+            } else {
+                menuOverlay.style.display = "block";
+                clearInterval(timer);
+            }
+        }
+
+        function resumeGame() {
+            document.getElementById("menu-overlay").style.display = "none";
+            timer = setInterval(count, 1000);
+        }
+
+        function endGame() {
+            alert("Game ended.");
+            window.location.href = '/main.html';
+        }
+    </script>
+</body>
+</html>
