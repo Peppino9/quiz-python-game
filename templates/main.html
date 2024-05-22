@@ -23,24 +23,22 @@
             <h2>User total score: {{ gen_score }}</h2>
             <h1>Please select the quiz type</h1>
             <form action="/start_quiz" method="post">
-                <!-- Easy Button >
-                <button type="submit" name="difficulty" value="easy"
-                    class="difficulty">Easy</button>
-                <button type="submit" name="difficulty" value="medium"
-                    class="difficulty">Medium</button>
-                <button type="submit" name="difficulty" value="hard"
-                    class="difficulty">Hard</button-->
-
-                <section style="float:left">
-                    <input type="radio" name="difficulty" value="easy" checked="checked">Easy</input>
-                    <input type="radio" name="difficulty" value="medium">Medium</input>
-                    <input type="radio" name="difficulty" value="hard">Hard</input>
+                <section>
+                    <label for="difficulty">Difficulty:</label>
+                    <select name="difficulty" id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
                 </section>
-                <section style="float:left">
-                    <input type="radio" name="category" value="allsvenskan">Allsvenskan</input>
-                    <input type="radio" name="category" value="ChaLeague">Champions League</input>
-                    <input type="radio" name="category" value="world-cup">World Cup</input>
-                    <input type="radio" name="category" value="AllAround" checked="checked">All Around</input>
+                <section>
+                    <label for="category">Category:</label>
+                    <select name="category" id="category">
+                        <option value="allsvenskan">Allsvenskan</option>
+                        <option value="ChaLeague">Champions League</option>
+                        <option value="world-cup">World Cup</option>
+                        <option value="AllAround">All Around</option>
+                    </select>
                 </section>
                 <input type="hidden" id="userId" name="userId" value="{{ username }}">
                 <button class="action-btn" type="submit">Start quiz</button>
@@ -52,14 +50,11 @@
                     <li>Bob - 1450 poäng</li>
                     <li>Carol - 1400 poäng</li>
                 </ol>
-                <a href="{{ url_for('show_users') }}"
-                    class="btn btn-primary">View
-                    Users</a>
+                <a href="{{ url_for('show_users') }}" class="btn btn-primary">View Users</a>
             </section>
             <form action="/suggest" method="post">
                 <input type="hidden" id="userId" name="userId" value="{{ username }}">
-                <button class="action-btn" type="submit" name="suggest-question" value="Suggest Question"
-                    class="Suggest-question">Suggest Question</button>
+                <button class="action-btn" type="submit" name="suggest-question" value="Suggest Question" class="Suggest-question">Suggest Question</button>
             </form>
         </main>
         <footer>
