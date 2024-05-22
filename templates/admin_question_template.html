@@ -1,0 +1,21 @@
+<section>
+    <form action="/admin" method="post">
+        <input type="hidden" id="adminId" name="adminId" value="{{ admin }}">
+        <p>{{ question }}</p>
+        <input type="hidden" id="q_name" name="q_name" value="{{ question }}">
+        <ul>
+            {% for answer in answers %}
+            <li>{{ answer }}</li>
+            {% endfor %}
+        </ul>
+        <p>Correct answer: {{ rightAns }}</p>
+        <p>Category: {{ cat }}</p>
+        <p>Level: {{ level }}</p>
+        <button class="action-btn" type="submit">Approve</button>
+    </form>
+    <form action="/admin" method="post">
+        <input type="hidden" id="adminId" name="adminId" value="{{ admin }}">
+        <input type="hidden" id="deleteQuestion" name="deleteQuestion" value="{{ question }}">
+        <button class="action-btn" type="submit">Delete</button>
+    </form>
+</section>
