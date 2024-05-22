@@ -11,12 +11,33 @@
 <div class="admin-container">
     <div class="admin-header">
         <h2>Admin Panel: {{admin}}</h2>
+        <form action="/" method="get">
+            <input type="submit" value="Logout" name="Logout" class="delete-btn"/>
+        </form>
+        <form action="/suggest" method="post">
+            <input type="hidden" id="userId" name="userId" value="{{ admin }}">
+            <input type="hidden" id="admin" name="admin" value="admin">
+            <button class="action-btn" type="submit" name="suggest-question" value="Suggest Question"
+                class="Suggest-question">Suggest Question</button>
+        </form>
     </div>
-    <h2>Approve/Deny Suggestions</h2>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'ApproveDeny')" id="defaultOpen">Approve/Deny Suggestions</button>
+        <button class="tablinks" onclick="openTab(event, 'Questions')">Questions bank</button>
+    </div>
+    <!--h2>Approve/Deny Suggestions</h2-->
+    <div id="ApproveDeny" class="tabcontent">
+        {% for q in questions_list %}
+            {{q | safe}}
+        {% endfor %}
+    </div>
+    <div id="Questions" class="tabcontent">
+        {% for q in bank_list %}
+            {{q | safe}}
+        {% endfor %}
+    </div>
 
-    {% for q in questions_list %}
-        {{q | safe}}
-    {% endfor %}
+
     <!--div id="suggestions-list">
         <div class="suggestion-row">
             <span>Suggestion Frågor</span>
@@ -44,5 +65,27 @@
         <button type="submit">Add Question</button>
     </form-->
 </div>
+
+<script>
+    function openTab(evt, tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+</script>
+
+<script>
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+
 </body>
 </html>
