@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="/static/style.css">
+        <title>Sign In - FutQuiz</title>
+    </head>
+    <body>
+        <input type="hidden" id="alertMsg" name="alertMsg" value="{{ alert_msg }}">
+        <header>
+            <div id="logo">
+                <a href="/"> &copy; FutQuiz</a>
+            </div>
+        </header>
+            <div class="form-container">
+                
+                <div class="form-content">
+                    <h2>Sign in to your account</h2>
+                    <p>Sign in to enjoy exclusive promotions.</p>
+                    <form action="/user_view" method="POST">
+                        <div class="input-group">
+                            <label for="Username">Username (email)</label>
+                            <br><br>
+                            <input type="text" id="Username"
+                                placeholder="Enter Username" name="uname" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="password">Password</label>
+                            <br><br>
+                            <input type="password" id="password"
+                                placeholder="Enter Password" name="psw" required>
+                        </div>
+                        <button type="submit" class="submit-button">Login</button>
+                    </form>
+                </div>
+                <script type="text/javascript">
+                    document.onreadystatechange = function() {
+                        if(document.readyState=='loaded' || document.readyState=='complete') {
+                            var msg = document.getElementById("alertMsg").value;
+                            if (msg) {
+                                alert(msg);
+                            }
+                        }
+                    }
+                </script>
+            </div>
+        <footer>
+            © FutQuiz
+        </footer>
+    </body>
+</html>
