@@ -69,17 +69,21 @@ def is_valid_password(password):
     has_digit = any(char.isdigit() for char in password)
     return has_upper and has_digit
 
-def build_admin_questions_list(adminName):
+def build_admin_questions_list(adminName, liveQuestions):
     admin_questions_list = []
+    if liveQuestions:
+        template_str = "admin_question_bank_template.html"
+    else: 
+        template_str = "admin_question_template.html"
     try:
-        results = dbConnector.executeSQL("SELECT * FROM Questionz WHERE Accepted=FALSE")
+        results = dbConnector.executeSQL("SELECT * FROM Questionz WHERE Accepted=%r" % liveQuestions)
         for row in results:
             ans = []
             ans.append(row[1])
             ans.append(row[2])
             ans.append(row[3])
             ans.append(row[4])
-            admin_questions_list.append(render_template("admin_question_template.html",
+            admin_questions_list.append(render_template(template_str,
                                                         admin=adminName,
                                                         question=row[0],
                                                         answers=ans,
@@ -164,8 +168,9 @@ def user_view():
         uname = userId
 
     if isAdmin:
-        q_list = build_admin_questions_list(uname)
-        return render_template('admin.html', admin=uname, questions_list=q_list)
+        q_list = build_admin_questions_list(uname, False)
+        b_list = build_admin_questions_list(uname, True)
+        return render_template('admin.html', admin=uname, questions_list=q_list, bank_list=b_list)
 
     try:
         results = dbConnector.executeSQL("SELECT Score FROM users WHERE email='%s'" % uname)
@@ -195,8 +200,9 @@ def admin_view():
             dbConnector.executeSQL("DELETE FROM Questionz WHERE Question='%s'" % delQ)
         except Exception as e:
             print("ERROR: %s" % str(e))
-    q_list = build_admin_questions_list(adminUser)
-    return render_template('admin.html', admin=adminUser, questions_list=q_list)
+    q_list = build_admin_questions_list(adminUser, False)
+    b_list = build_admin_questions_list(adminUser, True)
+    return render_template('admin.html', admin=adminUser, questions_list=q_list, bank_list=b_list)
 
 @app.route('/new_user_view', methods=['POST'])
 def new_user_view():
@@ -284,15 +290,22 @@ def show_question(userId):
 @app.route('/suggest', methods=['POST'])
 def suggest():
     userId = request.form.get("userId")
+    isAdmin = request.form.get("admin")
     if isBlank(userId):
         return redirect('/login')
-    return render_template('suggest.html', user=userId)
+    if isBlank(isAdmin):
+        isAdmin = "" 
+    return render_template('suggest.html', user=userId, admin=isAdmin)
 
 @app.route('/submit_question', methods=['POST'])
 def submit_question():
     userId = request.form.get("userId")
+    admin = request.form.get("admin")
     if isBlank(userId):
         return redirect('/login')
+    accepted = False
+    if not isBlank(admin):
+        accepted = True
     difficulty = int(request.form.get("difficulty"))
     category = request.form.get("category")
     question = request.form.get("question")
@@ -303,11 +316,16 @@ def submit_question():
     CorrectAnswer = int(request.form.get("CorrectAnswer"))
     print(CorrectAnswer)
     try:
-        dbConnector.executeSQL("INSERT INTO Questionz (Question,ANS1,ANS2,ANS3,ANS4,CorrectAns,CAT,Level,Accepted) VALUES ('%s','%s','%s','%s','%s','%d','%s','%d',FALSE)" %
-                               (question, answer1, answer2, answer3, answer4, CorrectAnswer, category, difficulty))
+        dbConnector.executeSQL("INSERT INTO Questionz (Question,ANS1,ANS2,ANS3,ANS4,CorrectAns,CAT,Level,Accepted) VALUES ('%s','%s','%s','%s','%s','%d','%s','%d',%r)" %
+                               (question, answer1, answer2, answer3, answer4, CorrectAnswer, category, difficulty, accepted))
     except Exception as e:
         print('ERROR: %s' % (str(e)))
         return render_template('suggest.html', user=userId)
+
+    if not isBlank(admin):
+        q_list = build_admin_questions_list(userId, False)
+        b_list = build_admin_questions_list(userId, True)
+        return render_template('admin.html', admin=userId, questions_list=q_list, bank_list=b_list)
     return render_template('main.html', username=userId)
 
 @app.route('/next_question', methods=['POST'])
