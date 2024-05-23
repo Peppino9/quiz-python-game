@@ -1,0 +1,10 @@
+<section>
+    <div action="/admin" method="post">
+        <p>User email: {{ email }}</p>
+    </div>
+    <form action="/admin" method="post">
+        <input type="hidden" id="adminId" name="adminId" value="{{ admin }}">
+        <input type="hidden" id="deleteUser" name="deleteUser" value="{{ email }}">
+        <button class="action-btn" type="submit">Delete</button>
+    </form>
+</section>
