@@ -24,7 +24,6 @@
     <div class="tab">
         <button class="tablinks" onclick="openTab(event, 'ApproveDeny')" id="defaultOpen">Approve/Deny Suggestions</button>
         <button class="tablinks" onclick="openTab(event, 'Questions')">Questions bank</button>
-        <button class="tablinks" onclick="openTab(event, 'Users')">Users</button>
     </div>
     <!--h2>Approve/Deny Suggestions</h2-->
     <div id="ApproveDeny" class="tabcontent">
@@ -35,11 +34,6 @@
     <div id="Questions" class="tabcontent">
         {% for q in bank_list %}
             {{q | safe}}
-        {% endfor %}
-    </div>
-    <div id="Users" class="tabcontent">
-        {% for u in users_list %}
-            {{u | safe}}
         {% endfor %}
     </div>
 

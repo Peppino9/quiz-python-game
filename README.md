@@ -43,6 +43,26 @@ FutQuiz är ett webbaserat quizspel utvecklat i Python med Flask-ramverket. Proj
   - **requirement.txt** (requirement file)
 
 
+## New Directory Structure /Mappstruktur
+- **quiz-python-game/** (Main Directory)
+  - **app.py** (Main Python file for the Flask application)
+  - **helpers.py** (Helper functions used across the application)
+  - **routes/** (Directory for Flask routes)
+    - **__init__.py** (Initialize the routes package)
+    - **admin_routes.py** (Routes for admin functionalities)
+    - **auth_routes.py** (Routes for authentication functionalities)
+    - **quiz_routes.py** (Routes for quiz functionalities)
+    - **user_routes.py** (Routes for user functionalities)
+  - **utils/** (Directory for utility functions)
+    - **__init__.py** (Initialize the utils package)
+    - **db_connection_utils.py** (Utility file for database connections)
+  - **templates/** (Directory for HTML templates)
+  - **static/** (Directory for CSS, and other static files)
+  - **tests/** (Directory for tests)
+  - **README.md** (Project README file)
+  - **.gitignore** (Git ignore file)
+  - **requirements.txt** (Requirement file)
+
 
 ## Hur Man Kommer Igång 1
 1. Klona detta repository till din lokala maskin med kommandot `git clone https://github.com/Peppino9/quiz-python-game.git`.

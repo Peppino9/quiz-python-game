@@ -1,10 +1,3 @@
-'''
-Created on Feb 25, 2024
-
-@author: Thomas
-'''
-
-
 import psycopg2
 
 
