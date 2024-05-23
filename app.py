@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.secret_key = 'default_secret_key'
 questions_in_quiz = 3
 
+#this list is useless
 questions_easy = [
     {
       "question": "Which team won the UEFA Champions League in 2017?",
@@ -30,6 +31,7 @@ questions_easy = [
     }
 ]
 
+# same here
 questions_medium = [
     {
       "question": "Who is the only goalkeeper to have won the Ballon d'Or?",
@@ -54,7 +56,6 @@ def isBlank(checked_str):
     if not checked_str or checked_str.strip() == "" or checked_str.strip() == "None":
         return True
     return False
-
 
 @app.route('/users') #Ej slutfört, ska bli LEADERBOARD HÄR.
 def show_users():
@@ -131,7 +132,7 @@ def signup(alert=""):
 
     return render_template('signup.html', alert_msg=alert_message)
 
-
+#this is admin's panel so it should be admin_view 
 @app.route('/user_view', methods=['POST', 'GET'])
 def user_view():
     userId = request.form.get("userId")
@@ -378,3 +379,4 @@ def show_results(userId):
 if __name__ == '__main__':
     app.run(debug=False)
     
+#the code is good but it needs some changes and some structure to undrestand it easier.
