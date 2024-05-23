@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.secret_key = 'default_secret_key'
 questions_in_quiz = 3
 
+#this list is useless
 questions_easy = [
     {
       "question": "Which team won the UEFA Champions League in 2017?",
@@ -30,6 +31,7 @@ questions_easy = [
     }
 ]
 
+# same here
 questions_medium = [
     {
       "question": "Who is the only goalkeeper to have won the Ballon d'Or?",
@@ -55,11 +57,10 @@ def isBlank(checked_str):
         return True
     return False
 
-
 @app.route('/users') #Ej slutfört, ska bli LEADERBOARD HÄR.
 def show_users():
     try:
-        users = dbConnector.executeSQL("SELECT user_id, email FROM users")  # Adjust the query with correct column names
+        users = dbConnector.executeSQL("SELECT user_id, email, Score FROM users ORDER BY Score DESC")  # Adjust the query with correct column names
         return render_template('users.html', users=users)
     except Exception as e:
         return str(e)
@@ -94,6 +95,19 @@ def build_admin_questions_list(adminName, liveQuestions):
         print("ERROR: %s" % str(e))
 
     return admin_questions_list
+
+def build_admin_users_list(adminName):
+    admin_users_list = []
+    try:
+        results = dbConnector.executeSQL("SELECT Email FROM Users")
+        for row in results:
+            admin_users_list.append(render_template('admin_user_template.html',
+                                                        admin=adminName,
+                                                        email=row[0]))
+    except Exception as e:
+        print("ERROR: %s" % str(e))
+
+    return admin_users_list
 
 
 # Homepage Route
@@ -131,7 +145,8 @@ def signup(alert=""):
 
     return render_template('signup.html', alert_msg=alert_message)
 
-
+#admin uses the same route to log on
+#Only user email makes diffrence between admin and ordinary user
 @app.route('/user_view', methods=['POST', 'GET'])
 def user_view():
     userId = request.form.get("userId")
@@ -170,25 +185,27 @@ def user_view():
     if isAdmin:
         q_list = build_admin_questions_list(uname, False)
         b_list = build_admin_questions_list(uname, True)
-        return render_template('admin.html', admin=uname, questions_list=q_list, bank_list=b_list)
+        u_list = build_admin_users_list(uname)
+        return render_template('admin.html', admin=uname, questions_list=q_list, bank_list=b_list, users_list=u_list)
 
     try:
         results = dbConnector.executeSQL("SELECT Score FROM users WHERE email='%s'" % uname)
+        top_u = dbConnector.executeSQL("SELECT Email, Score FROM users ORDER BY Score DESC LIMIT 3")
         for row in results:
             if not isAdmin:
                 g_score = row[0]
     except Exception as e:
         print("ERROR: %s" % str(e))
-    return render_template('main.html', username=uname, gen_score=g_score)
+    return render_template('main.html', username=uname, gen_score=g_score, top_players=top_u)
 
 @app.route('/admin', methods=['POST', 'GET'])
 def admin_view():
     adminUser = request.form.get("adminId")
-    print('Admin: %s' % adminUser)
     if isBlank(adminUser):
         return redirect('/login')
     qName = request.form.get("q_name")
     delQ = request.form.get("deleteQuestion")
+    delU = request.form.get("deleteUser")
 
     if not isBlank(qName):
         try:
@@ -200,9 +217,15 @@ def admin_view():
             dbConnector.executeSQL("DELETE FROM Questionz WHERE Question='%s'" % delQ)
         except Exception as e:
             print("ERROR: %s" % str(e))
+    elif not isBlank(delU):
+        try:
+            dbConnector.executeSQL("DELETE FROM Users WHERE Email='%s'" % delU)
+        except Exception as e:
+            print("ERROR: %s" % str(e))
     q_list = build_admin_questions_list(adminUser, False)
     b_list = build_admin_questions_list(adminUser, True)
-    return render_template('admin.html', admin=adminUser, questions_list=q_list, bank_list=b_list)
+    u_list = build_admin_users_list(adminUser)
+    return render_template('admin.html', admin=adminUser, questions_list=q_list, bank_list=b_list, users_list=u_list)
 
 @app.route('/new_user_view', methods=['POST'])
 def new_user_view():
@@ -378,3 +401,4 @@ def show_results(userId):
 if __name__ == '__main__':
     app.run(debug=False)
     
+#the code is good but it needs some changes and some structure to undrestand it easier.

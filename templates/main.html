@@ -40,15 +40,14 @@
                 <button class="action-btn" type="submit">Start quiz</button>
             </form>
             <section id="leaderboard">
-                <h2>Toppspelare</h2>
+                <h2>Leaderboard</h2>
                 <ol>
-                    <li>Alice - 1500 poäng</li>
-                    <li>Bob - 1450 poäng</li>
-                    <li>Carol - 1400 poäng</li>
+                    {% for player in top_players %}
+                        <li>{{ player[0] }} - {{ player[1] }} points</li>
+                    {% endfor %}
                 </ol>
                 <a href="{{ url_for('show_users') }}"
-                    class="btn btn-primary">View
-                    Users</a>
+                    class="btn btn-primary">View Rankings</a>
             </section>
             <form action="/suggest" method="post">
                 <input type="hidden" id="userId" name="userId" value="{{ username }}">
