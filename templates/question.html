@@ -51,6 +51,7 @@
                     timerDisplay.innerHTML = "Time's up!";
                     answerButtons.forEach(function(button) {
                         button.disabled = true;
+                        button.classList.add("red-button");
                     });
                     nextButton.style.display = 'block';
                     return;
