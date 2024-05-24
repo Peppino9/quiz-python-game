@@ -143,6 +143,12 @@ h1 {
     margin: 10px;
     transition: background-color 0.3s;
 }
+
+.red-button {
+    background-color: rgb(209, 19, 19);
+    color: white;
+}
+
 footer {
     position: fixed;
     background:#00813e;
