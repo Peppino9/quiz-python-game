@@ -9,6 +9,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ url_for('static', filename='quizflow.css') }}">
+        <link rel="stylesheet" href="/static/quizflow.css">
         <title>FutQuiz</title>
     </head>
     <body>
@@ -20,17 +21,24 @@
                 <h1>Welcome, {{ username }}</h1>
                 <p>Välj svårighetsgrad och testa dina kunskaper!</p>
             </div>
+            <form action="/suggest" method="post">
+                <input type="hidden" id="userId" name="userId" value="{{ username }}">
+                <input type="hidden" id="admin" name="admin" value="">
+                <button class="action-btn" type="submit" name="suggest-question" value="Suggest Question"
+                    class="Suggest-question">Suggest Question</button>
+            </form>
         </header>
         <main>
-            <h2>User total score: {{ gen_score }}</h2>
-            <h1>Please select the quiz type</h1>
-            <form action="/start_quiz" method="post">
-                <section id="buttns" style="float:left">
+            <h3 id="userscore">User total score: {{ gen_score }}</h3>
+            
+            <form id="quiztype" action="/start_quiz" method="post">
+                <h2>Please select the quiz type</h2>
+                <section id="buttns" ">
                     <input type="radio" name="difficulty" value="easy" checked="checked">Easy</input>
                     <input type="radio" name="difficulty" value="medium">Medium</input>
                     <input type="radio" name="difficulty" value="hard">Hard</input>
                 </section>
-                <section style="float:left">
+                <section>
                     <input type="radio" name="category" value="allsvenskan">Allsvenskan</input>
                     <input type="radio" name="category" value="ChaLeague">Champions League</input>
                     <input type="radio" name="category" value="world-cup">World Cup</input>
@@ -46,15 +54,10 @@
                         <li>{{ player[0] }} - {{ player[1] }} points</li>
                     {% endfor %}
                 </ol>
-                <a href="{{ url_for('show_users') }}"
+                <button><a href="{{ url_for('show_users') }}"
                     class="btn btn-primary">View Rankings</a>
+                </button>
             </section>
-            <form action="/suggest" method="post">
-                <input type="hidden" id="userId" name="userId" value="{{ username }}">
-                <input type="hidden" id="admin" name="admin" value="">
-                <button class="action-btn" type="submit" name="suggest-question" value="Suggest Question"
-                    class="Suggest-question">Suggest Question</button>
-            </form>
         </main>
         <footer>
             <p>© 2024 FutQuiz. Alla rättigheter förbehållna.</p>
