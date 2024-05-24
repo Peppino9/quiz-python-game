@@ -149,6 +149,12 @@ h1 {
     color: white;
 }
 
+.green-button {
+    background-color: green;
+    color: white;
+}
+
+
 footer {
     position: fixed;
     background:#00813e;
