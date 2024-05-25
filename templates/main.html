@@ -29,7 +29,7 @@
             </form>
         </header>
         <main>
-            <h3 id="userscore">User total score: {{ gen_score }}</h3>
+            <h3 id="userscore">Your total score: {{ gen_score }}</h3>
             
             <form id="quiztype" action="/start_quiz" method="post">
                 <h2>Please select the quiz type</h2>
@@ -55,7 +55,7 @@
                     {% endfor %}
                 </ol>
                 <button><a href="{{ url_for('show_users') }}"
-                    class="btn btn-primary">View Rankings</a>
+                    class="btn btn-primary">View all Rankings</a>
                 </button>
             </section>
         </main>

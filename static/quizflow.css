@@ -110,7 +110,7 @@ header p {
   button {
     background-color: #0ec968; 
     color: white;
-    border: none;
+    border: solid 1px;;
     border-radius: 5px;
     padding: 12px 24px;
     font-size: 16px;
@@ -136,7 +136,7 @@ header p {
   #leaderboard, #quiztype {
     width: 100%; 
     max-width: 500px; 
-    background: radial-gradient(circle, rgba(74,227,147,1) 0%, rgba(19,119,67,1) 100%);
+    background: radial-gradient(circle, rgb(0, 205, 89) 0%, rgba(19,119,67,1) 100%);
     border: 1px solid #ddd;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

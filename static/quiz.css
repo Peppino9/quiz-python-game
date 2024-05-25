@@ -3,10 +3,37 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("assets/stadium.jpg");
 }
+header {
+    
+    background-color: #137743; 
+    color: #ffffff;
+    text-align: center;
+    display:flex ;
+    flex-direction:row ;
+    width: 100%;
+    padding: 20px;
+    position: fixed;
+
+  }
+
+  h2{
+    color: #fff;
+  }
+  #logo a{
+    text-decoration: none;
+    left: 20px;
+    font-size: 33px;
+    font-family: 'Luckiest Guy';
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px rgb(191 146 91);
+    border-bottom: 1px solid rgb(191 146 91); 
+  }
 
 .quiz-container {
     background: radial-gradient(circle, rgba(74,227,147,1) 0%, rgba(19,119,67,1) 100%);
@@ -16,8 +43,9 @@ body {
     max-width: 800px;
     width: 100%;
     text-align: center;
-    position: relative;
+    margin-top: 15%;
 }
+
 
 .header {
     display: flex;
@@ -103,7 +131,9 @@ h1 {
 }
 
 #score-display {
-    color: rgb(237, 12, 12);
+    font-family: 'Luckiest Guy';
+    font-size: 24px;
+    color: rgb(255, 255, 255);
     font-size: 20px;
     margin: 0;
 }
@@ -114,6 +144,14 @@ h1 {
 }
 
 .menu-overlay {
+    background: radial-gradient(circle, rgba(74,227,147,1) 0%, rgba(19,119,67,1) 100%);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+
     display: none;
     position: fixed;
     top: 0;
@@ -126,10 +164,13 @@ h1 {
 }
 
 .menu-box {
-    background: white;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    margin: auto;
+    width: 50%;
+    background: radial-gradient(circle, rgb(0, 205, 89) 0%, rgba(19,119,67,1) 100%);
+
 }
 
 .menu-btn {
@@ -184,12 +225,31 @@ footer {
 
 /* Responsiveness */
 @media (min-width: 768px) {
+
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+
+        align-items: center;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("assets/stadium.jpg");
+        width: auto;
+    }
+
     main {
-        flex-direction: row; 
+        flex-direction: column; 
         justify-content: space-around;
+        width: auto;
     }
 
     header p {
         font-size: 18px; 
     }
+    .quiz-container {
+        flex-wrap: wrap;
+    }
+    
 }
+
+

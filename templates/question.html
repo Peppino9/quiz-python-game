@@ -3,38 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Question</title>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+    <link rel="stylesheet" href="/static/quiz.css">
+
 </head>
 <body>
-    <div class="quiz-container">
-        <div class="header">
-            <h2>{{ username }}</h2>
-            <button class="meny-button" onclick="toggleMenu()">Meny ⏸️</button>
-            <h2 class="question-number">Question {{ question_number }}/{{ total_questions }}</h2>
+    <main>
+        <div class="quiz-container">
+            <div class="header">
+                <h2>{{ username }}</h2>
+                <button class="meny-button" onclick="toggleMenu()">Menu ⏸️</button>
+                <h2 class="question-number">Question {{ question_number }}/{{ total_questions }}</h2>
+            </div>
+            <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-success" id="progress-bar" ></div>
+            </div>
+            <p id="timer-display" class="countdown">30 seconds</p>
+            <p id="score-display">Score: {{ score }}</p>
+            <h1>{{ question['question'] }}</h1>
+            <form action="/answer" method="post" id="answer-form">
+                {% for option in question['options'] %}
+                <button type="submit" name="option" value="{{ option }}" class="answer-btn" data-correct="{{ 'true' if option == question['answer'] else 'false' }}">{{ option }}</button>
+                {% endfor %}
+                <input type="hidden" id="userId" name="userId" value="{{ username }}">
+            </form>
+            <button id="next-question-btn" style="display:none;" onclick="nextQuestion()">Next</button>
         </div>
-        <div class="progress progress-striped active">
-            <div class="progress-bar progress-bar-success" id="progress-bar" style="width:100%;"></div>
+        <div id="menu-overlay" class="menu-overlay">
+            <div class="menu-box">
+                <button onclick="resumeGame()" class="menu-btn">Continue</button>
+                <button onclick="endGame()" class="menu-btn">End Game</button>
+            </div>
         </div>
-        <p id="timer-display" class="countdown">30 seconds</p>
-        <p id="score-display">Score: {{ score }}</p>
-        <h1>{{ question['question'] }}</h1>
-        <form action="/answer" method="post" id="answer-form">
-            {% for option in question['options'] %}
-            <button type="submit" name="option" value="{{ option }}" class="answer-btn" data-correct="{{ 'true' if option == question['answer'] else 'false' }}">{{ option }}</button>
-            {% endfor %}
-            <input type="hidden" id="userId" name="userId" value="{{ username }}">
+        <form id="next-question-form" action="/next_question" method="post" style="display:none;">
+            <input type="hidden" id="next-userId" name="userId" value="{{ username }}">
         </form>
-        <button id="next-question-btn" style="display:none;" onclick="nextQuestion()">Next</button>
-    </div>
-    <div id="menu-overlay" class="menu-overlay">
-        <div class="menu-box">
-            <button onclick="resumeGame()" class="menu-btn">Continue</button>
-            <button onclick="endGame()" class="menu-btn">End Game</button>
-        </div>
-    </div>
-    <form id="next-question-form" action="/next_question" method="post" style="display:none;">
-        <input type="hidden" id="next-userId" name="userId" value="{{ username }}">
-    </form>
+    </main>
     <script>
         var seconds = 5; 
         var initialSeconds = seconds;
@@ -109,7 +114,7 @@
 
         function endGame() {
             alert("Game ended.");
-            window.location.href = '/main.html';
+            window.location.href = ('/user_view');
         }
     </script>
 </body>
