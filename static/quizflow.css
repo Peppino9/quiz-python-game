@@ -47,6 +47,10 @@ main {
     font-family: "Poppins", sans-serif;
 }
 
+#quiztext {
+  font-weight: 600;
+}
+
 
 
 input[type='radio'] {
