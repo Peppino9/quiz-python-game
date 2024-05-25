@@ -4,15 +4,40 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Users List</title>
+        <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='quizflow.css') }}">
+        <link rel="stylesheet" href="/static/quizflow.css">
+        <title>FutQuiz</title>
 
     </head>
     <body>
-        <h1>Users List</h1>
+        <header>
+            <div id="logo">
+                <a href="/"> &copy; FutQuiz</a>
+            </div>
+            <div id="welcome">
+                <h1>Welcome to full leaderboard</h1>
+            </div>
+            <section id="head">
+                <form action="/suggest" method="post">
+                    <input type="hidden" id="userId" name="userId" value="{{ username }}">
+                    <input type="hidden" id="admin" name="admin" value="">
+                    <button class="action-btn" type="submit" name="suggest-question" value="Suggest Question"
+                        class="Suggest-question">Suggest Question</button>
+                </form>
+                <form action="/logout" method="post" style="display: inline;">
+                    <button class="action-btn" type="submit">Sign Out</button>
+                </form>
+            </section>
+        </header>
+        <section id="userscore">
+            <h1>Users List</h1>
 
         <ul>
             {% for user in users %}
-            <li>ID: {{ user[0] }}, Email: {{ user[1] }}, Score: {{ user[2] }}</li>
+            <li>Email: {{ user[1] }}, Score: {{ user[2] }}</li>
             {% endfor %}
         </ul>
+        </section>
     </body>
 </html>

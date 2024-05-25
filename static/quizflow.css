@@ -83,9 +83,6 @@ header p {
     margin: 0;
     
   }
-  h3 {
-
-  }
 
   #userscore {
   display: block;
@@ -97,6 +94,9 @@ header p {
   border-radius: 8px;
   margin-top: 20px;
   color:rgb(255, 255, 255);
+  }
+  li {
+    list-style: none;
   }
   
   header p {
@@ -186,7 +186,6 @@ header p {
     width: 100%;
     max-width: 200px;
 }
-  
   
   footer {
     color: #fff;
