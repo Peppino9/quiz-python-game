@@ -24,6 +24,7 @@ body {
     text-align: center;
     display:flex ;
     flex-direction:row ;
+    align-content: center;
     justify-content: space-between;
   }
   #logo a{
@@ -142,6 +143,7 @@ header p {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-top: 20px;
+    margin-bottom: 20px;
     color: rgb(255, 255, 255);
     
   }
@@ -182,7 +184,6 @@ header p {
   
   
   footer {
-    position: fixed;
     color: #fff;
     background:#137743;
     text-align:right;

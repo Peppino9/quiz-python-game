@@ -6,6 +6,8 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    min-height: 400px;
+    margin-bottom: 100px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("assets/stadium.jpg");
 }
@@ -195,9 +197,12 @@ h1 {
     color: white;
 }
 
+#your-score {
+    font-family: 'Luckiest Guy';
+    font-size: 50px;
+}
 
 footer {
-    position: fixed;
     background:#00813e;
     text-align:right;
     bottom: 0;

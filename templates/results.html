@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
 </head>
 <body>
     <div class="quiz-container">
         <h2>{{ username }}</h2>
-        <h1>Your Score: {{ score }}</h1>
+        <h1 id="your-score">Your Score: {{ score }}</h1>
         <!--button onclick="window.location.href='/user_view'" id="next-question-btn">Home</button-->
         <form action="/user_view" method="post">
             <input type="hidden" id="userId" name="userId" value="{{ username }}">
