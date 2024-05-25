@@ -1,5 +1,4 @@
 # app.py Import Flask and render_template
-import random
 import time
 from flask import Flask, render_template, request, redirect, session, url_for
 from db_connection_utils import DbUtils
@@ -11,44 +10,6 @@ import datetime
 app = Flask(__name__)
 app.secret_key = 'default_secret_key'
 questions_in_quiz = 3
-
-#this list is useless
-questions_easy = [
-    {
-      "question": "Which team won the UEFA Champions League in 2017?",
-      "options": ["Real Madrid", "Barcelona", "Bayern Munich", "Liverpool"],
-      "answer": "Real Madrid"
-    },
-    {
-      "question": "Who is the all-time leading goal scorer for the German national team?",
-      "options": ["Miroslav Klose", "Thomas Muller", "Gerd Muller", "Lukas Podolski"],
-      "answer": "Miroslav Klose"
-    },
-    {
-      "question": "Which country hosted the UEFA European Championship in 2008?",
-      "options": ["Austria & Switzerland", "Germany", "France", "Spain"],
-      "answer": "Austria & Switzerland"
-    }
-]
-
-# same here
-questions_medium = [
-    {
-      "question": "Who is the only goalkeeper to have won the Ballon d'Or?",
-      "options": ["Lev Yashin", "Iker Casillas", "Manuel Neuer", "Gianluigi Buffon"],
-      "answer": "Lev Yashin"
-    },
-    {
-      "question": "Which club has won the most Bundesliga titles?",
-      "options": ["Bayern Munich", "Borussia Dortmund", "Borussia Monchengladbach", "Hamburger SV"],
-      "answer": "Bayern Munich"
-    },
-    {
-      "question": "Who is the youngest player to win the UEFA European Championship?",
-      "options": ["Renato Sanches", "Wayne Rooney", "Mario Gotze", "Cristiano Ronaldo"],
-      "answer": "Renato Sanches"
-    }
-]
 
 dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "oxbk46tq")
 
@@ -251,13 +212,6 @@ def new_user_view():
     return render_template('main.html', username=email)
 
 
-# Quiz page r
-def get_questions(difficulty):
-    if difficulty == "medium":
-        return questions_medium
-    #elif difficulty == "hard":
-        #return questions_hard
-    return questions_easy
 
 
 def map_level(difficulty):

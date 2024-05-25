@@ -10,7 +10,6 @@
             <h1>Question: {{ question['question'] }}</h1>
             <p>You selected: {{ chosen }}</p>
             <p>Correct answer: {{ question['answer'] }}</p>
-            <p>{{ correct }}</p>
             <form action="/next_question" method="post">
                 <input type="hidden" id="userId" name="userId" value="{{ username }}">
                 <button type="submit" id="next-question-btn" name="next-question-btn">Next</button>                

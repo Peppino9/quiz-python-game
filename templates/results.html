@@ -11,7 +11,6 @@
     <div class="quiz-container">
         <h2>{{ username }}</h2>
         <h1 id="your-score">Your Score: {{ score }}</h1>
-        <!--button onclick="window.location.href='/user_view'" id="next-question-btn">Home</button-->
         <form action="/user_view" method="post">
             <input type="hidden" id="userId" name="userId" value="{{ username }}">
             <button type="submit" id="next-question-btn">Home</button>                
