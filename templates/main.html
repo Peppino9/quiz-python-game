@@ -21,12 +21,17 @@
                 <h1>Welcome, {{ username }}</h1>
                 <p>Välj svårighetsgrad och testa dina kunskaper!</p>
             </div>
-            <form action="/suggest" method="post">
-                <input type="hidden" id="userId" name="userId" value="{{ username }}">
-                <input type="hidden" id="admin" name="admin" value="">
-                <button class="action-btn" type="submit" name="suggest-question" value="Suggest Question"
-                    class="Suggest-question">Suggest Question</button>
-            </form>
+            <section id="head">
+                <form action="/suggest" method="post">
+                    <input type="hidden" id="userId" name="userId" value="{{ username }}">
+                    <input type="hidden" id="admin" name="admin" value="">
+                    <button class="action-btn" type="submit" name="suggest-question" value="Suggest Question"
+                        class="Suggest-question">Suggest Question</button>
+                </form>
+                <form action="/logout" method="post" style="display: inline;">
+                    <button class="action-btn" type="submit">Sign Out</button>
+                </form>
+            </section>
         </header>
         <main>
             <h3 id="userscore">Your total score: {{ gen_score }}</h3>

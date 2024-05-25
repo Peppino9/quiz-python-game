@@ -130,6 +130,11 @@ def login(alert=""):
 
     return render_template('login.html', alert_msg=alert_message)
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
 
 @app.route('/signup')
 @app.route('/signup/msg/<alert>')

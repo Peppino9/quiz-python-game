@@ -1,5 +1,5 @@
 
-body {
+main {
     font-family: "Poppins", sans-serif; 
     background-color: #fdfdfd;
     color: #ffffff;
@@ -37,10 +37,11 @@ body {
     border-bottom: 1px solid rgb(191 146 91); 
   }
  
-
-  section {
+#head {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 10px;
-    margin: 5px;
     border-radius: 5px; 
     color: #fdfdfd;
     font-family: "Poppins", sans-serif;
