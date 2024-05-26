@@ -116,6 +116,7 @@ def signup(alert=""):
 @app.route('/user_view', methods=['POST', 'GET'])
 def user_view():
     userId = request.form.get("userId")
+    admin_str = request.form.get("admin")
     uname = None
     passwd = None
 
@@ -147,6 +148,8 @@ def user_view():
             return redirect("/login/msg/loginError")
     else:
         uname = userId
+        if not isBlank(admin_str):
+            isAdmin = True
 
     if isAdmin:
         q_list = build_admin_questions_list(uname, False)
@@ -205,14 +208,12 @@ def new_user_view():
         return redirect('/signup/msg/wrongPassword')
     try:
         dbConnector.executeSQL("INSERT INTO users (email,password_hash,created_at) VALUES ('%s','%s',CURRENT_TIMESTAMP)" % (email, passwd))
+        top_u = dbConnector.executeSQL("SELECT Email, Score FROM users ORDER BY Score DESC LIMIT 3")
     except Exception:
         return redirect('/signup/msg/cantCreateUser')
 
     #return template
-    return render_template('main.html', username=email)
-
-
-
+    return render_template('main.html', username=email, gen_score="0", top_players=top_u)
 
 def map_level(difficulty):
     if difficulty == "easy":
@@ -307,8 +308,18 @@ def submit_question():
     if not isBlank(admin):
         q_list = build_admin_questions_list(userId, False)
         b_list = build_admin_questions_list(userId, True)
-        return render_template('admin.html', admin=userId, questions_list=q_list, bank_list=b_list)
-    return render_template('main.html', username=userId)
+        u_list = build_admin_users_list(userId)
+        return render_template('admin.html', admin=userId, questions_list=q_list, bank_list=b_list, users_list=u_list)
+
+    try:
+        results = dbConnector.executeSQL("SELECT Score FROM users WHERE email='%s'" % userId)
+        top_u = dbConnector.executeSQL("SELECT Email, Score FROM users ORDER BY Score DESC LIMIT 3")
+        for row in results:
+            g_score = row[0]
+    except Exception as e:
+        print("ERROR: %s" % str(e))
+    return render_template('main.html', username=userId, gen_score=g_score, top_players=top_u)
+
 
 @app.route('/next_question', methods=['POST'])
 def next_question():

@@ -16,7 +16,12 @@
         <input type="hidden" id="alertMsg" name="alertMsg" value="{{ alert_msg }}">
         <header>
             <div id="logo">
-                <a href="/"> &copy; FutQuiz</a>
+                <!--a href="/"> &copy; FutQuiz</a-->
+                <form action="/user_view" method="POST">
+                    <input type="hidden" id="userId" name="userId" value="{{ user }}">
+                    <input type="hidden" id="admin" name="admin" value="{{ admin }}">
+                    <button type="submit" class="logo-btn"> &copy; FutQuiz</button>
+                </form>
             </div>
         </header>  
         <div class="form-container">
