@@ -1,4 +1,5 @@
 # app.py Import Flask and render_template
+import random
 import time
 from flask import Flask, render_template, request, redirect, session, url_for
 from db_connection_utils import DbUtils
@@ -10,6 +11,44 @@ import datetime
 app = Flask(__name__)
 app.secret_key = 'default_secret_key'
 questions_in_quiz = 3
+
+#this list is useless
+questions_easy = [
+    {
+      "question": "Which team won the UEFA Champions League in 2017?",
+      "options": ["Real Madrid", "Barcelona", "Bayern Munich", "Liverpool"],
+      "answer": "Real Madrid"
+    },
+    {
+      "question": "Who is the all-time leading goal scorer for the German national team?",
+      "options": ["Miroslav Klose", "Thomas Muller", "Gerd Muller", "Lukas Podolski"],
+      "answer": "Miroslav Klose"
+    },
+    {
+      "question": "Which country hosted the UEFA European Championship in 2008?",
+      "options": ["Austria & Switzerland", "Germany", "France", "Spain"],
+      "answer": "Austria & Switzerland"
+    }
+]
+
+# same here
+questions_medium = [
+    {
+      "question": "Who is the only goalkeeper to have won the Ballon d'Or?",
+      "options": ["Lev Yashin", "Iker Casillas", "Manuel Neuer", "Gianluigi Buffon"],
+      "answer": "Lev Yashin"
+    },
+    {
+      "question": "Which club has won the most Bundesliga titles?",
+      "options": ["Bayern Munich", "Borussia Dortmund", "Borussia Monchengladbach", "Hamburger SV"],
+      "answer": "Bayern Munich"
+    },
+    {
+      "question": "Who is the youngest player to win the UEFA European Championship?",
+      "options": ["Renato Sanches", "Wayne Rooney", "Mario Gotze", "Cristiano Ronaldo"],
+      "answer": "Renato Sanches"
+    }
+]
 
 dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "oxbk46tq")
 
@@ -91,11 +130,6 @@ def login(alert=""):
 
     return render_template('login.html', alert_msg=alert_message)
 
-@app.route('/logout', methods=['POST'])
-def logout():
-    session.clear()
-    return redirect(url_for('login'))
-
 
 @app.route('/signup')
 @app.route('/signup/msg/<alert>')
@@ -116,7 +150,6 @@ def signup(alert=""):
 @app.route('/user_view', methods=['POST', 'GET'])
 def user_view():
     userId = request.form.get("userId")
-    admin_str = request.form.get("admin")
     uname = None
     passwd = None
 
@@ -132,8 +165,10 @@ def user_view():
         except Exception:
             return redirect('/login')
         passwd = request.form.get("psw")
+
         try:
             results = dbConnector.executeSQL("SELECT password_hash FROM users WHERE email='%s'" % uname)
+
             if not results:
                 results = dbConnector.executeSQL("SELECT password FROM admins WHERE email='%s'" % uname)
                 if not results:
@@ -148,8 +183,60 @@ def user_view():
             return redirect("/login/msg/loginError")
     else:
         uname = userId
-        if not isBlank(admin_str):
-            isAdmin = True
+
+    if isAdmin:
+        q_list = build_admin_questions_list(uname, False)
+        b_list = build_admin_questions_list(uname, True)
+        u_list = build_admin_users_list(uname)
+        return render_template('admin.html', admin=uname, questions_list=q_list, bank_list=b_list, users_list=u_list)
+
+    try:
+        results = dbConnector.executeSQL("SELECT Score FROM users WHERE email='%s'" % uname)
+        top_u = dbConnector.executeSQL("SELECT Email, Score FROM users ORDER BY Score DESC LIMIT 3")
+        for row in results:
+            if not isAdmin:
+                g_score = row[0]
+    except Exception as e:
+        print("ERROR: %s" % str(e))
+    return render_template('main.html', username=uname, gen_score=g_score, top_players=top_u)
+
+@app.route('/end-game', methods=['POST'])
+def end_game():
+    userId = request.form.get("userId")
+    uname = None
+    passwd = None
+
+    session['current_question'] = 0
+    '''
+    This if statement is needed if the user is already logged in and it's redirected here from other page.
+    In order to avoid requesting credentials again!!!
+    Of course, that page should post the userId.
+    '''
+    isAdmin = False
+    if isBlank(userId):
+        try:
+            uname = request.form.get("uname").lower()
+        except Exception:
+            return redirect('/login')
+        passwd = request.form.get("psw")
+
+        try:
+            results = dbConnector.executeSQL("SELECT password_hash FROM users WHERE email='%s'" % uname)
+
+            if not results:
+                results = dbConnector.executeSQL("SELECT password FROM admins WHERE email='%s'" % uname)
+                if not results:
+                    return redirect("/login/msg/wrongUserPass")
+                isAdmin = True
+            for row in results:
+                c_pass = row[0]
+                if c_pass != passwd:
+                    return redirect("/login/msg/wrongUserPass")
+        except Exception as e:
+            print("ERROR: %s" % str(e))
+            return redirect("/login/msg/loginError")
+    else:
+        uname = userId
 
     if isAdmin:
         q_list = build_admin_questions_list(uname, False)
@@ -208,12 +295,21 @@ def new_user_view():
         return redirect('/signup/msg/wrongPassword')
     try:
         dbConnector.executeSQL("INSERT INTO users (email,password_hash,created_at) VALUES ('%s','%s',CURRENT_TIMESTAMP)" % (email, passwd))
-        top_u = dbConnector.executeSQL("SELECT Email, Score FROM users ORDER BY Score DESC LIMIT 3")
     except Exception:
         return redirect('/signup/msg/cantCreateUser')
 
     #return template
-    return render_template('main.html', username=email, gen_score="0", top_players=top_u)
+    return render_template('main.html', username=email)
+
+
+# Quiz page r
+def get_questions(difficulty):
+    if difficulty == "medium":
+        return questions_medium
+    #elif difficulty == "hard":
+        #return questions_hard
+    return questions_easy
+
 
 def map_level(difficulty):
     if difficulty == "easy":
@@ -257,7 +353,17 @@ def start_quiz():
     session['score'] = 0
     session['start_time'] = time.time()
     session['difficulty'] = difficulty
+    session['isEligibleForLifeLine'] = 'yes'
     #return redirect(url_for('show_question'))
+    return show_question(userId)
+
+@app.route('/restart-quiz', methods=['POST'])
+def restart_quiz():
+    userId = request.form.get("userId")
+    session['current_question'] = 0
+    session['score'] = 0
+    session['start_time'] = time.time()
+    session['isEligibleForLifeLine'] = 'yes'
     return show_question(userId)
 
 #@app.route('/question')
@@ -268,7 +374,7 @@ def show_question(userId):
     question_number = session['current_question'] + 1
     total_questions = len(session['questions'])
     score = session.get('score', 0)
-    return render_template('question.html', question=question, question_number=question_number, total_questions=total_questions, score=score, username=userId)
+    return render_template('question.html', isEligibleForLifeline=session['isEligibleForLifeLine'], question=question, question_number=question_number, total_questions=total_questions, score=score, username=userId)
 
 @app.route('/suggest', methods=['POST'])
 def suggest():
@@ -297,7 +403,6 @@ def submit_question():
     answer3 = request.form.get("answer3")
     answer4 = request.form.get("answer4")
     CorrectAnswer = int(request.form.get("CorrectAnswer"))
-    print(CorrectAnswer)
     try:
         dbConnector.executeSQL("INSERT INTO Questionz (Question,ANS1,ANS2,ANS3,ANS4,CorrectAns,CAT,Level,Accepted) VALUES ('%s','%s','%s','%s','%s','%d','%s','%d',%r)" %
                                (question, answer1, answer2, answer3, answer4, CorrectAnswer, category, difficulty, accepted))
@@ -308,65 +413,60 @@ def submit_question():
     if not isBlank(admin):
         q_list = build_admin_questions_list(userId, False)
         b_list = build_admin_questions_list(userId, True)
-        u_list = build_admin_users_list(userId)
-        return render_template('admin.html', admin=userId, questions_list=q_list, bank_list=b_list, users_list=u_list)
-
-    try:
-        results = dbConnector.executeSQL("SELECT Score FROM users WHERE email='%s'" % userId)
-        top_u = dbConnector.executeSQL("SELECT Email, Score FROM users ORDER BY Score DESC LIMIT 3")
-        for row in results:
-            g_score = row[0]
-    except Exception as e:
-        print("ERROR: %s" % str(e))
-    return render_template('main.html', username=userId, gen_score=g_score, top_players=top_u)
-
+        return render_template('admin.html', admin=userId, questions_list=q_list, bank_list=b_list)
+    return render_template('main.html', username=userId)
 
 @app.route('/next_question', methods=['POST'])
 def next_question():
     userId = request.form.get("userId")
     if isBlank(userId):
         return redirect('/login')
-    print('user nc: %s' % userId)
     if 'current_question' in session and session['current_question'] < len(session['questions']) - 1:
         session['current_question'] += 1
         session['start_time'] = time.time()  # Reset start time for the new question
-        #return redirect(url_for('show_question'))
         question = session['questions'][session['current_question']]
         question_number = session['current_question'] + 1
         total_questions = len(session['questions'])
         score = session.get('score', 0)
-        return render_template('question.html', question=question, question_number=question_number, total_questions=total_questions, score=score, username=userId)
+        return render_template('question.html', isEligibleForLifeline=session['isEligibleForLifeLine'], question=question, question_number=question_number, total_questions=total_questions, score=score, username=userId)
     #return redirect(url_for('show_results'))
     return show_results(userId)
 
 @app.route('/answer', methods=['POST'])
 def answer():
+
     if 'current_question' not in session or session['current_question'] >= len(session['questions']):
         return redirect(url_for('show_results'))
     current = session['questions'][session['current_question']]
     choice = request.form['option']
     userId = request.form.get("userId")
+    
+    session['isEligibleForLifeLine'] = request.form.get("isEligible")
     if isBlank(userId):
         return redirect('/login')
-    print('user ans: %s' % userId)
     correct = choice == current['answer']
     multiplier = {'easy': 1, 'medium': 1.5, 'hard': 2}[session['difficulty']]
     elapsed_time = max(30 - (time.time() - session['start_time']), 0)
     if correct:
         session['score'] += int(elapsed_time * multiplier)
     session['start_time'] = time.time()  # Reset the timer
-    return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'], username=userId)
+    isFinalQtn = (len(session['questions']) - session['current_question']) == 1
+    return render_template('answer.html', isFinalQtn=isFinalQtn, question=current, chosen=choice, correct=correct, score=session['score'], username=userId)
 
 #@app.route('/results')
 def show_results(userId):
     score = session.get('score', 0)
-    session.clear()
+    # session.clear()
     try:
         dbConnector.executeSQL("UPDATE Users SET Score=Score+%d WHERE Email='%s'" % (score, userId))
     except Exception as e:
         print('ERROR: %s' % (str(e)))
     return render_template('results.html', score=score, username=userId)
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return redirect('/login')
 # Run the application
 if __name__ == '__main__':
     app.run(debug=False)
