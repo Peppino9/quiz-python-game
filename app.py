@@ -241,34 +241,54 @@ def get_questions_from_db(cat, level):
         print("ERROR: %s" % str(e))
     return questions
 
+@app.route('/restart_quiz', methods=['POST'])
+def restart_quiz():
+    difficulty = request.form.get("difficulty")
+    category = request.form.get("category")
+    userId = request.form.get("userId")
+    if isBlank(userId):
+        return redirect('/login')
+
+    print('param rest q: %s %s %s' % (userId, category, difficulty))
+    return initialize_question(userId, category, difficulty)
+
 @app.route('/start_quiz', methods=['POST'])
 def start_quiz():
     difficulty = request.form['difficulty']
-    level = map_level(difficulty)
     category = request.form['category']
     userId = request.form.get("userId")
     if isBlank(userId):
         return redirect('/login')
-    #questions = get_questions(difficulty)
-    #random.shuffle(questions)
+
+    print('param start q: %s %s %s' % (userId, category, difficulty))
+    return initialize_question(userId, category, difficulty)
+
+
+def initialize_question(userId, category, difficulty):
+    level = map_level(difficulty)
     questions = get_questions_from_db(category, level)
     session['questions'] = questions
     session['current_question'] = 0
     session['score'] = 0
     session['start_time'] = time.time()
     session['difficulty'] = difficulty
-    #return redirect(url_for('show_question'))
-    return show_question(userId)
+    return show_question(userId, category, difficulty)
 
 #@app.route('/question')
-def show_question(userId):
+def show_question(userId, category, difficulty):
     if 'current_question' not in session or session['current_question'] >= len(session['questions']):
-        return redirect(url_for('show_results'))
+        return show_results(userId, category, difficulty)
     question = session['questions'][session['current_question']]
     question_number = session['current_question'] + 1
     total_questions = len(session['questions'])
     score = session.get('score', 0)
-    return render_template('question.html', question=question, question_number=question_number, total_questions=total_questions, score=score, username=userId)
+    return render_template('question.html', question=question,
+                           question_number=question_number,
+                           total_questions=total_questions,
+                           score=score,
+                           username=userId,
+                           cat=category,
+                           diff=difficulty)
 
 @app.route('/suggest', methods=['POST'])
 def suggest():
@@ -324,6 +344,8 @@ def submit_question():
 @app.route('/next_question', methods=['POST'])
 def next_question():
     userId = request.form.get("userId")
+    difficulty = request.form.get("difficulty")
+    category = request.form.get("category")
     if isBlank(userId):
         return redirect('/login')
     print('user nc: %s' % userId)
@@ -335,9 +357,16 @@ def next_question():
         question_number = session['current_question'] + 1
         total_questions = len(session['questions'])
         score = session.get('score', 0)
-        return render_template('question.html', question=question, question_number=question_number, total_questions=total_questions, score=score, username=userId)
+        return render_template('question.html',
+                               question=question,
+                               question_number=question_number,
+                               total_questions=total_questions,
+                               score=score,
+                               username=userId,
+                               cat=category,
+                               diff=difficulty)
     #return redirect(url_for('show_results'))
-    return show_results(userId)
+    return show_results(userId, category, difficulty)
 
 @app.route('/answer', methods=['POST'])
 def answer():
@@ -346,6 +375,8 @@ def answer():
     current = session['questions'][session['current_question']]
     choice = request.form['option']
     userId = request.form.get("userId")
+    difficulty = request.form.get("difficulty")
+    category = request.form.get("category")
     if isBlank(userId):
         return redirect('/login')
     print('user ans: %s' % userId)
@@ -355,17 +386,30 @@ def answer():
     if correct:
         session['score'] += int(elapsed_time * multiplier)
     session['start_time'] = time.time()  # Reset the timer
-    return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'], username=userId)
+    return render_template('answer.html', question=current, chosen=choice, correct=correct, score=session['score'],
+                           username=userId,
+                           cat=category,
+                           diff=difficulty)
 
-#@app.route('/results')
-def show_results(userId):
+@app.route('/results', methods=['POST'])
+def result():
+    userId = request.form.get("userId")
+    difficulty = request.form.get("difficulty")
+    category = request.form.get("category")
+    if isBlank(userId):
+        return redirect('/login')
+    print('param result: %s %s %s' % (userId, category, difficulty))
+    return show_results(userId, category, difficulty)
+
+def show_results(userId, category, difficulty):
     score = session.get('score', 0)
     session.clear()
     try:
         dbConnector.executeSQL("UPDATE Users SET Score=Score+%d WHERE Email='%s'" % (score, userId))
     except Exception as e:
         print('ERROR: %s' % (str(e)))
-    return render_template('results.html', score=score, username=userId)
+    print('param show result: %s %s %s' % (userId, category, difficulty))
+    return render_template('results.html', score=score, username=userId, cat=category, diff=difficulty)
 
 # Run the application
 if __name__ == '__main__':

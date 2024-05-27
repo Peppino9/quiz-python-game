@@ -24,9 +24,11 @@
             <h1>{{ question['question'] }}</h1>
             <form action="/answer" method="post" id="answer-form">
                 {% for option in question['options'] %}
+                <input type="hidden" id="userId" name="userId" value="{{ username }}">
+                <input type="hidden" id="category" name="category" value="{{ cat }}">
+                <input type="hidden" id="difficulty" name="difficulty" value="{{ diff }}">
                 <button type="submit" name="option" value="{{ option }}" class="answer-btn" data-correct="{{ 'true' if option == question['answer'] else 'false' }}">{{ option }}</button>
                 {% endfor %}
-                <input type="hidden" id="userId" name="userId" value="{{ username }}">
             </form>
             <button id="next-question-btn" style="display:none;" onclick="nextQuestion()">Next</button>
         </div>
@@ -37,7 +39,14 @@
             </div>
         </div>
         <form id="next-question-form" action="/next_question" method="post" style="display:none;">
-            <input type="hidden" id="next-userId" name="userId" value="{{ username }}">
+            <input type="hidden" id="userId" name="userId" value="{{ username }}">
+            <input type="hidden" id="category" name="category" value="{{ cat }}">
+            <input type="hidden" id="difficulty" name="difficulty" value="{{ diff }}">
+        </form>
+        <form id="end-game-form" action="/results" method="post" style="display:none;">
+            <input type="hidden" id="userId" name="userId" value="{{ username }}">
+            <input type="hidden" id="category" name="category" value="{{ cat }}">
+            <input type="hidden" id="difficulty" name="difficulty" value="{{ diff }}">
         </form>
     </main>
     <script>
@@ -113,8 +122,8 @@
         }
 
         function endGame() {
-            alert("Game ended.");
-            window.location.href = ('/user_view');
+            var form = document.getElementById("end-game-form");
+            form.submit();
         }
     </script>
 </body>

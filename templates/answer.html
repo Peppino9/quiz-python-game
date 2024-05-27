@@ -12,6 +12,8 @@
             <p>Correct answer: {{ question['answer'] }}</p>
             <form action="/next_question" method="post">
                 <input type="hidden" id="userId" name="userId" value="{{ username }}">
+                <input type="hidden" id="category" name="category" value="{{ cat }}">
+                <input type="hidden" id="difficulty" name="difficulty" value="{{ diff }}">
                 <button type="submit" id="next-question-btn" name="next-question-btn">Next</button>                
             </form>
         </div>
