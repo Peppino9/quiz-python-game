@@ -74,6 +74,15 @@ header {
     font-size: 24px;
     color: white;
     cursor: pointer;
+    background: green;
+    border-radius: 5px;
+    padding: 9px;
+
+}
+
+.meny-button:hover{
+    background-color: #ffffff;
+    color: black;
 }
 
 .question-number {
@@ -178,7 +187,7 @@ h1 {
 .menu-btn {
     background-color: #137743;
     color: white;
-    border: none;
+    border:black;
     border-radius: 5px;
     padding: 12px 24px;
     font-size: 16px;
