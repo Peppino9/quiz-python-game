@@ -220,4 +220,15 @@ header p {
     margin-top: 20px;
     color:rgb(255, 255, 255);
     }
+
+    .logo-btn{
+      text-decoration: none;
+      font-size: 33px;
+      font-family: 'Luckiest Guy';
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 2px #fff;
+      background-color:#137743;
+      padding:20px 0 20px 20px;
+      border:none;
+    }
   
