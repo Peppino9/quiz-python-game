@@ -259,12 +259,17 @@
     background-color: #0e5934;
 }
 
-.delete-btn {
+.logout-btn {
     background-color: red;
     color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.delete-btn:hover {
+.logout-btn:hover {
     background-color: darkred;
 }
 
