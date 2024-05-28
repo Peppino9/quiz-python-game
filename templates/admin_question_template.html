@@ -13,7 +13,7 @@
             <p> <b> Question:</b> {{ question }}</p>
             <input type="hidden" id="q_name" name="q_name" value="{{ question }}">
             <ul>
-                <b>Alternativ:</b>
+                <b>Alternatives:</b>
                 {% for answer in answers %}
                 <li>{{ answer }}</li>
                 {% endfor %}
