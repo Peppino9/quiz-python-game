@@ -1,10 +1,21 @@
-<section>
-    <div action="/admin" method="post">
-        <p>User email: {{ email }}</p>
-    </div>
-    <form action="/admin" method="post">
-        <input type="hidden" id="adminId" name="adminId" value="{{ admin }}">
-        <input type="hidden" id="deleteUser" name="deleteUser" value="{{ email }}">
-        <button class="action-btn" type="submit">Delete</button>
-    </form>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section id="usersadmin">
+        <div action="/admin" method="post">
+            <p>User email: {{ email }}</p>
+        </div>
+        <form action="/admin" method="post">
+            <input type="hidden" id="adminId" name="adminId" value="{{ admin }}">
+            <input type="hidden" id="deleteUser" name="deleteUser" value="{{ email }}">
+            <button class="action-btn" type="submit">Delete</button>
+        </form>
+    </section>
+</body>
+</html>
