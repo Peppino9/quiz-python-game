@@ -124,7 +124,9 @@
     border-bottom: 1px solid #00813e;
   }
 
-
+  #pass {
+    color: #474545;
+  }
 
   footer {
     position: fixed;

@@ -18,10 +18,10 @@ def isBlank(checked_str):
         return True
     return False
 
-@app.route('/users') #Ej slutfört, ska bli LEADERBOARD HÄR.
+@app.route('/users') 
 def show_users():
     try:
-        users = dbConnector.executeSQL("SELECT user_id, email, Score FROM users ORDER BY Score DESC")  # Adjust the query with correct column names
+        users = dbConnector.executeSQL("SELECT user_id, email, Score FROM users ORDER BY Score DESC") 
         return render_template('users.html', users=users)
     except Exception as e:
         return str(e)
@@ -414,5 +414,3 @@ def show_results(userId, category, difficulty):
 # Run the application
 if __name__ == '__main__':
     app.run(debug=False)
-    
-#the code is good but it needs some changes and some structure to undrestand it easier.
