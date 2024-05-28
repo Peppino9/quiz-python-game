@@ -9,7 +9,7 @@ import datetime
 
 app = Flask(__name__)
 app.secret_key = 'default_secret_key'
-questions_in_quiz = 3
+questions_in_quiz = 4
 
 dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "oxbk46tq")
 
@@ -18,11 +18,12 @@ def isBlank(checked_str):
         return True
     return False
 
-@app.route('/users') 
+@app.route('/users', methods=['POST']) 
 def show_users():
+    userId = request.form.get("userId")
     try:
         users = dbConnector.executeSQL("SELECT user_id, email, Score FROM users ORDER BY Score DESC") 
-        return render_template('users.html', users=users)
+        return render_template('users.html', users=users, username=userId)
     except Exception as e:
         return str(e)
 

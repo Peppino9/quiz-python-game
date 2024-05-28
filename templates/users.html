@@ -13,7 +13,12 @@
     <body>
         <header>
             <div id="logo">
-                <a href="/"> &copy; FutQuiz</a>
+                <!--a href="/"> &copy; FutQuiz</a-->
+                <form action="/user_view" method="POST">
+                    <input type="hidden" id="userId" name="userId" value="{{ username }}">
+                    <input type="hidden" id="admin" name="admin" value="">
+                    <button type="submit" class="logo-btn"> &copy; FutQuiz</button>
+                </form>
             </div>
             <div id="welcome">
                 <h1>Welcome to full leaderboard</h1>
