@@ -9,7 +9,7 @@ import datetime
 
 app = Flask(__name__)
 app.secret_key = 'default_secret_key'
-questions_in_quiz = 4
+questions_in_quiz = 10
 
 dbConnector = DbUtils("pgserver.mau.se", "futquiz", "aj2020", "oxbk46tq")
 
