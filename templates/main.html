@@ -62,9 +62,6 @@
                         <li>{{ player[0] }} - {{ player[1] }} points</li>
                     {% endfor %}
                 </ol>
-                <!--button><a href="{{ url_for('show_users') }}"
-                    class="btn btn-primary">View all Rankings</a>
-                </button-->
                 <form action="/users" method="post">
                     <input type="hidden" id="userId" name="userId" value="{{ username }}">
                     <input type="hidden" id="admin" name="admin" value="">
