@@ -36,8 +36,8 @@ main {
     font-size: 33px;
     font-family: 'Luckiest Guy';
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 2px rgb(191 146 91);
-    border-bottom: 1px solid rgb(191 146 91); 
+    -webkit-text-stroke: 2px rgb(245, 245, 245);
+    border-bottom: 1px solid rgb(255, 255, 255); 
   }
  
 #head {
